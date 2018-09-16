@@ -1,12 +1,17 @@
 <template>
 	<div id="app">
-		<router-view></router-view>
+		<app-header></app-header>
+		<comp-flow></comp-flow>
 	</div>
 </template>
 
 <script>
+	import appHeader from './components/AppHeader'
+	import compFlow from './components/CompFlow'
+
 	export default {
-		name: 'hedera'
+		name: 'hedera',
+		components: { appHeader, compFlow },
 	}
 </script>
 
