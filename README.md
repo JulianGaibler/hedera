@@ -1,8 +1,6 @@
-# hedera
+![hedera](http://qvieo.com/githubimg/hedera_banner.png)
 
-> A tool to abstract laws into branchable questions
-
-#### Build Setup
+## Build Setup
 
 ``` bash
 # install dependencies
@@ -15,3 +13,14 @@ npm run dev
 npm run build
 
 ```
+## Linting
+
+Consider downloading an extension for your Editor
+
+``` bash
+npm run lint
+```
+
+## Commits
+
+Use [gitmoji](https://gitmoji.carloscuesta.me/) for all future commits

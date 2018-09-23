@@ -1,12 +1,12 @@
+import { app, remote } from 'electron'
 import Jetpack from 'fs-jetpack'
 import Yaml from 'js-yaml'
-import { app, remote } from 'electron'
-const electronApp = (app || remote.app);
 
-const filePath = remote.app.getPath('appData')+'/hedera'
+const electronApp = (app || remote.app)
+
+const filePath = electronApp.getPath('appData') + '/hedera'
 
 export default class AppData {
-
 	/**
 	 * Writes config-file to AppData
 	 *
@@ -14,7 +14,7 @@ export default class AppData {
 	 */
 	static saveJson(fileName, data) {
 		// Relaying the promise
-		Jetpack.writeAsync(`${filePath}/${fileName}.json`, data, )
+		Jetpack.writeAsync(`${filePath}/${fileName}.json`, data)
 	}
 
 	/**
@@ -25,7 +25,7 @@ export default class AppData {
 	 */
 	static loadJson(fileName) {
 		// Relaying the promise
-		return Jetpack.read(`${filePath}/${fileName}.json`, 'json');
+		return Jetpack.read(`${filePath}/${fileName}.json`, 'json')
 	}
 
 	/**
@@ -38,8 +38,8 @@ export default class AppData {
 	 * @returns {boolean} false if file already exists
 	 */
 	static createCollection({title, title_short, file, color}) {
-		let result = Jetpack.exists(file);
-		if (result === 'file') return false;
+		const result = Jetpack.exists(file)
+		if (result === 'file') return false
 
 		let data = {
 			title,
@@ -52,8 +52,9 @@ export default class AppData {
 		}
 
 		this.saveCollection(file, data)
-		return true;
+		return true
 	}
+
 	/**
 	 * Checks if file exists
 	 *
@@ -61,18 +62,18 @@ export default class AppData {
 	 * @returns {boolean} true if file exists
 	 */
 	static checkForFile(file) {
-		return Jetpack.exists(file) === 'file';
+		return Jetpack.exists(file) === 'file'
 	}
 
 	/**
-	 * Loads File
+	 * Saves Collection
 	 *
 	 * @param {string} file - full path to file
-	 * @returns {boolean} true if file exists
+	 * @param {string} data - data to be saved
 	 */
 	static saveCollection(file, data) {
-		let yData = Yaml.safeDump(data, { condenseFlow: true, noCompatMode: true, lineWidth: 200 })
-		Jetpack.write(file, yData);
+		const yData = Yaml.safeDump(data, { condenseFlow: true, noCompatMode: true, lineWidth: 200 })
+		Jetpack.write(file, yData)
 	}
 
 	/**
@@ -82,7 +83,7 @@ export default class AppData {
 	 * @returns {boolean} true if file exists
 	 */
 	static loadCollection(file) {
-		let yData = Jetpack.read(file, 'utf8');
-		return Yaml.safeLoad(yData, { filename: file });
+		const yData = Jetpack.read(file, 'utf8')
+		return Yaml.safeLoad(yData, { filename: file })
 	}
 }

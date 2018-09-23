@@ -3,7 +3,7 @@ import Color from 'color'
 export default class Helpers {
 
 	static titleRegex() {
-		return /([\u2000-\u206F\u2190-\u21FF\u2200-\u22FF\u2500-\u257F\u0021-\u002C\u002E-\u002F\u2580-\u259F\u25A0-\u25FF\u2600-\u26FF\u2800-\u28FF\uFFF0-\uFFFF\u0000-\u001F\u003A-\u0040\u005B-\u005F\u007B-\u007F])/g
+		return /([\u2000-\u206F\u2190-\u21FF\u2200-\u22FF\u2500-\u257F\u0021-\u002C\u002E-\u002F\u2580-\u259F\u25A0-\u25FF\u2600-\u26FF\u2800-\u28FF\uFFF0-\uFFFF\u003A-\u0040\u005B-\u005F\u007B-\u007E])/g
 	}
 
 	/**
@@ -44,7 +44,7 @@ export default class Helpers {
 	 * @returns {number} random value
 	 */
 	static getRandomArbitrary(min, max) {
-    	return Math.random() * (max - min) + min;
+		return Math.random() * (max - min) + min
 	}
 
 	/**
@@ -55,6 +55,6 @@ export default class Helpers {
 	 * @returns {number} random value
 	 */
 	static getRandomInt(min, max) {
-		return Math.floor(Math.random() * (max - min + 1)) + min;
+		return Math.floor(Math.random() * (max - min + 1)) + min
 	}
 }

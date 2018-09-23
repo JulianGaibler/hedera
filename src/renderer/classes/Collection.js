@@ -3,8 +3,8 @@ import AppData from './AppData'
 export default class Collection {
 
 	constructor(path) {
-		this.path = path;
-		this.data = AppData.loadCollection(path);
+		this.path = path
+		this.data = AppData.loadCollection(path)
 	}
 
 	save() {

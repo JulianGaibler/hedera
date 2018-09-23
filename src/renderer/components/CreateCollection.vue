@@ -7,12 +7,12 @@
 			</div>
 			<hr class="spacer">
 			<div class="dist">
-				<form-input :key="0" v-model="buttons.title.value" :config="buttons.title"></form-input>
-				<form-input :key="1" v-model="buttons.title_short.value" :config="buttons.title_short"></form-input>
-				<form-input v-if="!data" :key="2" v-model="buttons.directory.value" :config="buttons.directory"></form-input>
-				<form-input :key="3" v-model="buttons.color.value" :config="buttons.color">
-					<div class="colorPreview" :style="{background: _getColor(parseInt(buttons.color.value))}"></div>
-				</form-input>
+				<formInput :key="0" v-model="buttons.title.value" :config="buttons.title" />
+				<formInput :key="1" v-model="buttons.title_short.value" :config="buttons.title_short" />
+				<formInput v-if="!data" :key="2" v-model="buttons.directory.value" :config="buttons.directory" />
+				<formInput :key="3" v-model="buttons.color.value" :config="buttons.color">
+					<div class="colorPreview" :style="{background: _getColor(parseInt(buttons.color.value))}" />
+				</formInput>
 			</div>
 		</div>
 		<div>
@@ -30,8 +30,8 @@ import AppData from '../classes/AppData'
 import { remote } from 'electron'
 
 export default {
-    name: 'create-collection',
-    props: ['sheet', 'data'],
+	name: 'createCollection',
+	props: ['sheet', 'data'],
 	/**
 	 * Data-Prop
 	 * {string} [data] - will edit parent-components collection
@@ -39,8 +39,8 @@ export default {
 	 * {string} data.title_short
 	 * {number} data.color
 	 */
-    data: function () {
-    	let buttons = {
+	data: function () {
+		let buttons = {
 			title: {
 				value: this.data ? this.data.title : '',
 				type: 'text',
@@ -72,7 +72,7 @@ export default {
 				label: 'Color',
 				placeholder: '0 to 360'
 			},
-    	}
+		}
 
 		return {
 			rid: Math.random(),
@@ -80,7 +80,7 @@ export default {
 			buttons,
 		}
 	},
-    components: { formInput },
+	components: { formInput },
 	methods: {
 		/**
 		 * Look at Helper-Class
@@ -90,84 +90,84 @@ export default {
 		 * Opens dialog to select a folder
 		 */
 		_setPath: function() {
-			let newPath = remote.dialog.showOpenDialog({ properties: ['openDirectory'] });
+			let newPath = remote.dialog.showOpenDialog({ properties: ['openDirectory'] })
 			if (newPath) {
-				this.path = newPath[0];
-				this._updatePathInput();
+				this.path = newPath[0]
+				this._updatePathInput()
 			}
 		},
 		/**
 		 * Concats path with file-name and updates input-field
 		 */
 		_updatePathInput: function() {
-			let a = this.buttons.title_short.value.replace(/[^a-zA-Z\-]/g, "")
-			let filename = (a!=='') ? a : 'untitled';
-			this.buttons.directory.value = `${this.path}/${filename}.ivy`;
+			let a = this.buttons.title_short.value.replace(/[^a-zA-Z-]/g, '')
+			let filename = (a!=='') ? a : 'untitled'
+			this.buttons.directory.value = `${this.path}/${filename}.ivy`
 		},
 		/**
 		 * Checks if values of inputs are valid and creates/edits collection
 		 */
 		_submit: function() {
-			let valid = true;
+			let valid = true
 
 			//Title
-			let title = this.buttons.title.value.replace(/^\s+|\s+$/g, "");
+			let title = this.buttons.title.value.replace(/^\s+|\s+$/g, '')
 			if (title.length < 1) {
-				this.$set(this.buttons.title, 'error', {info: 'You have to give a title'});
-				valid = false;
+				this.$set(this.buttons.title, 'error', {info: 'You have to give a title'})
+				valid = false
 			}
 			else if ((Helpers.titleRegex()).test(title)) {
-				this.$set(this.buttons.title, 'error', {info: 'Only letters, numbers, hyphens allowed'});
-				valid = false;
+				this.$set(this.buttons.title, 'error', {info: 'Only letters, numbers, hyphens allowed'})
+				valid = false
 			}
-			else this.$set(this.buttons.title, 'error', undefined);
+			else this.$set(this.buttons.title, 'error', undefined)
 
 			//title_short
-			let title_short = this.buttons.title_short.value.replace(/^\s+|\s+$/g, "");
+			let title_short = this.buttons.title_short.value.replace(/^\s+|\s+$/g, '')
 			if (title_short.length < 1) {
-				this.$set(this.buttons.title_short, 'error', {info: 'You have to give a Abbreviation'});
-				valid = false;
+				this.$set(this.buttons.title_short, 'error', {info: 'You have to give a Abbreviation'})
+				valid = false
 			}
 			else if ((/[^a-zA-Z0-9\- ]/g).test(title_short)) {
-				this.$set(this.buttons.title_short, 'error', {info: 'Only letters, numbers, hyphens and white-space allowed'});
-				valid = false;
+				this.$set(this.buttons.title_short, 'error', {info: 'Only letters, numbers, hyphens and white-space allowed'})
+				valid = false
 			}
-			else this.$set(this.buttons.title_short, 'error', undefined);
+			else this.$set(this.buttons.title_short, 'error', undefined)
 
 			//Location
-			let file;
+			let file
 			if (!this.data) {
-				file = this.buttons.directory.value.replace(/^\s+|\s+$/g, "");
-				file = file.replace(/(.*)\.(.*?)$/, "$1");
-				let idx = file.lastIndexOf('/');
-				file = `${file.substring(0, idx)}/${file.substring(idx+1)}.ivy`;
+				file = this.buttons.directory.value.replace(/^\s+|\s+$/g, '')
+				file = file.replace(/(.*)\.(.*?)$/, '$1')
+				let idx = file.lastIndexOf('/')
+				file = `${file.substring(0, idx)}/${file.substring(idx+1)}.ivy`
 			}
 
 			//Color
-			let color = parseInt(this.buttons.color.value);
+			let color = parseInt(this.buttons.color.value)
 			if (isNaN(color)) {
-				this.$set(this.buttons.color, 'error', {info: 'Color is not a number'});
-				valid = false;
+				this.$set(this.buttons.color, 'error', {info: 'Color is not a number'})
+				valid = false
 			}
-			else this.$set(this.buttons.color, 'error', undefined);
+			else this.$set(this.buttons.color, 'error', undefined)
 
 			if (valid && !this.data) {
 				if (AppData.createCollection({title, title_short, file, color})) {
-					this.sheet.closeSelf(this.sheet);
+					this.sheet.closeSelf(this.sheet)
 					this.sheet.get(0).open(file)
 				}
 				else {
-					this.$set(this.buttons.directory, 'error', {info: 'File already exists'});
+					this.$set(this.buttons.directory, 'error', {info: 'File already exists'})
 				}
 			} else if (valid && this.data) {
-				this.sheet.get(this.sheet.nr-1)._editCollection(title, title_short, color);
+				this.sheet.get(this.sheet.nr-1)._editCollection(title, title_short, color)
 			}
 
 		},
 	},
 	watch: {
-		'buttons.title_short.value': function (val) {
-			this._updatePathInput();
+		'buttons.title_short.value': function() {
+			this._updatePathInput()
 		}
 	},
 }

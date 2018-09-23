@@ -8,9 +8,9 @@ const modules = {}
 const plugins = []
 
 files.keys().forEach(key => {
-	if (key === './index.js') return;
-	modules[key.replace(/(\.\/|\.js)/g, '')] = files(key)._modules;
-	plugins.push(...files(key)._plugins);
+	if (key === './index.js') return
+	modules[key.replace(/(\.\/|\.js)/g, '')] = files(key)._modules
+	plugins.push(...files(key)._plugins)
 })
 
 export { modules, plugins }

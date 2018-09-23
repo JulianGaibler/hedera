@@ -1,6 +1,6 @@
 <template>
 	<div id="compFlow">
-		<horizontal-anim :callback="_animEnded">
+		<horizontalAnim :callback="_animEnded">
 			<div
 				v-for="sheet in sheets"
 				:key="sheet.nr"
@@ -8,9 +8,9 @@
 				:ref="'s'+sheet.nr"
 				:style="{ 'z-index': sheet.nr }"
 			>
-				<component :sheet="sheet" :ref="'c'+sheet.nr" :is="sheet.comp" :data="sheet.data" @compFlow="sheetCall($event)"></component>
+				<component :sheet="sheet" :ref="'c'+sheet.nr" :is="sheet.comp" :data="sheet.data" @compFlow="sheetCall($event)" />
 			</div>
-		</horizontal-anim>
+		</horizontalAnim>
 	</div>
 </template>
 
@@ -25,7 +25,7 @@ import collectionIndex from './CollectionIndex'
 import createCollection from './CreateCollection'
 
 export default {
-	name: 'comp-flow',
+	name: 'compFlow',
 	components: {
 		horizontalAnim,
 
@@ -54,7 +54,7 @@ export default {
 		}
 	},
 	mounted: function () {
-		this._spawnNext('collection-overview', {});
+		this._spawnNext('collection-overview', {})
 		//this.spawnNext('collection-index', { path:'/Users/Julian/Documents/StGB.ivy' });
 	},
 	methods: {
@@ -64,7 +64,7 @@ export default {
 		 * @param {object} data - data to give to the child
 		 */
 		_spawnNext: function(comp, data) {
-			let len = this.sheets.length;
+			let len = this.sheets.length
 			this.sheets.splice(len, 0, {
 				nr: len,
 				comp: comp,
@@ -76,7 +76,7 @@ export default {
 				focusChild: this.focusChild,
 				focusParent: this.focusParent,
 			})
-			this.focus = len;
+			this.focus = len
 		},
 		/**
 		 * Closes all existing children and created new one
@@ -85,11 +85,11 @@ export default {
 		 * @param {object} data - data to give to the child
 		 */
 		spawnChild: function(sheet, comp, data) {
-			let len = this.sheets.length;
-			if (len > sheet.nr+1) this.closeChild(sheet);
+			let len = this.sheets.length
+			if (len > sheet.nr+1) this.closeChild(sheet)
 			Vue.nextTick(() => {
-				this._spawnNext(comp, data);
-			});
+				this._spawnNext(comp, data)
+			})
 		},
 		/**
 		 * @param {number} sheet-nr
@@ -97,9 +97,9 @@ export default {
 		 */
 		getSheet: function(nr) {
 			if (this.$refs['c'+nr]) 
-				return this.$refs['c'+nr][0];
+				return this.$refs['c'+nr][0]
 			else
-				return undefined;
+				return undefined
 		},
 		/**
 		 * Closes given sheets child and all of it's children
@@ -121,7 +121,7 @@ export default {
 		 */
 		focusChild: function(sheet) {
 			if (this.sheets.length > sheet.nr)
-				this.focusSheet(sheet.nr+1);
+				this.focusSheet(sheet.nr+1)
 		},
 		/**
 		 * Focus and scroll to parent of sheet
@@ -129,23 +129,23 @@ export default {
 		 */
 		focusParent: function(sheet) {
 			if (sheet.nr > 0)
-				this.focusSheet(sheet.nr-1);
+				this.focusSheet(sheet.nr-1)
 		},
 		/**
 		 * Focus and scroll to sheet
 		 * @param {number} nr - sheet-nr to scroll to
 		 */
 		focusSheet: function(nr) {
-			let time = Math.abs(this.focus - nr)*300;
-			this.focus = nr;
-			if (this.sheets.length > 1) VueScrollTo.scrollTo(this.$refs['s'+nr][0], time, this.scrollOptions);
+			let time = Math.abs(this.focus - nr)*300
+			this.focus = nr
+			if (this.sheets.length > 1) VueScrollTo.scrollTo(this.$refs['s'+nr][0], time, this.scrollOptions)
 		},
 		/**
 		 * Callback for when horizontal-animation is finished
 		 */
 		_animEnded: function() {
 			if (this.sheets.length > 1)
-				VueScrollTo.scrollTo(this.$refs['s'+this.focus][0], 500, this.scrollOptions);
+				VueScrollTo.scrollTo(this.$refs['s'+this.focus][0], 500, this.scrollOptions)
 		}
 	}
 }

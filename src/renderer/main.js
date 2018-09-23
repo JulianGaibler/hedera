@@ -3,10 +3,9 @@ import Vue from 'vue'
 import App from './App'
 import store from './store'
 import Vector from './components/elements/Vector'
+import './assets/styles/main.scss'
 
 Vue.component('vector', Vector)
-
-import css from './assets/styles/main.scss';
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.config.productionTip = false

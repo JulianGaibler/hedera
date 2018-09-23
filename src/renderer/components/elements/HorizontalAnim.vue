@@ -1,55 +1,55 @@
 <template>
-  <transition-group
-	name="expand"
-	@enter="enter"
-	@after-enter="afterEnter"
-	@leave="leave"
-	@after-leave="afterLeave"
-  >
-	<slot/>
-  </transition-group>
+	<transition-group
+		name="expand"
+		@enter="enter"
+		@after-enter="afterEnter"
+		@leave="leave"
+		@after-leave="afterLeave"
+	>
+		<slot />
+	</transition-group>
 </template>
 
 <script>
-	export default {
-	  name: 'horizontal-anim',
-	  props: ['callback'],
-	  methods: {
+export default {
+	name: 'horizontalAnim',
+	props: ['callback'],
+	methods: {
 		enter(element) {
-		  const height = getComputedStyle(element).height;
-
-		  element.style.height = height;
-		  element.style.position = 'absolute';
-		  element.style.visibility = 'hidden';
-		  element.style.width = 'auto';
-
-		  const width = getComputedStyle(element).width;
-
-		  element.style.height = null;
-		  element.style.position = null;
-		  element.style.visibility = null;
-		  element.style.width = 0;
-
-		  setTimeout(() => {
-			element.style.width = width;
-		  });
+			const height = getComputedStyle(element).height
+	
+			element.style.height = height
+			element.style.position = 'absolute'
+			element.style.visibility = 'hidden'
+			element.style.width = 'auto'
+	
+			const width = getComputedStyle(element).width
+	
+			element.style.height = null
+			element.style.position = null
+			element.style.visibility = null
+			element.style.width = 0
+	
+			setTimeout(() => {
+				element.style.width = width
+			})
 		},
 		afterEnter(element) {
-	    	element.style.width = 'auto';
-	    	this.callback();
-	    },
-	    afterLeave(element) {
-	    	this.callback();
-	    },
-	    leave(element) {
-	    	const width = getComputedStyle(element).width;
-	      	
-	    	element.style.width = width;
+			element.style.width = 'auto'
+			this.callback()
+		},
+		afterLeave() {
+			this.callback()
+		},
+		leave(element) {
+			const width = getComputedStyle(element).width
+				
+			element.style.width = width
 
-	    	setTimeout(() => {
-	    		element.style.width = 0;
-	    	});
-	  },
+			setTimeout(() => {
+				element.style.width = 0
+			})
+		},
 	}
 }
 </script>

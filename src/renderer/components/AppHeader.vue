@@ -1,17 +1,17 @@
 <template>
-  <header>
-    <vector class="logo" src="~@/assets/logo.svg"></vector>
-    <div class="navigation"><div></div></div>
-  </header>
+	<header>
+		<vector class="logo" src="~@/assets/logo.svg" />
+		<div class="navigation"><div /></div>
+	</header>
 </template>
 
 <script>
 
-  export default {
-    name: 'app-header',
-    components: { },
-    methods: { }
-  }
+export default {
+	name: 'appHeader',
+	components: { },
+	methods: { }
+}
 </script>
 
 <style>

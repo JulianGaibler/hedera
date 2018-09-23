@@ -1,18 +1,18 @@
 <template>
 	<div id="app">
-		<app-header></app-header>
-		<comp-flow></comp-flow>
+		<appHeader />
+		<compFlow />
 	</div>
 </template>
 
 <script>
-	import appHeader from './components/AppHeader'
-	import compFlow from './components/CompFlow'
+import appHeader from './components/AppHeader'
+import compFlow from './components/CompFlow'
 
-	export default {
-		name: 'hedera',
-		components: { appHeader, compFlow },
-	}
+export default {
+	name: 'hedera',
+	components: { appHeader, compFlow },
+}
 </script>
 
 <style>

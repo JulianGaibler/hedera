@@ -1,7 +1,7 @@
 <template>
 	<div class="collectionOverview bottombar">
 		<div>
-			<div v-for="doc in recentDocuments" class="collectionBook">
+			<div v-for="doc in recentDocuments" :key="doc.file" class="collectionBook">
 				<div class="cover" @click="open(doc.file)" :style="{'background': _getColor(doc.color)}">
 					<div>{{doc.title_short}}</div>
 					<div>{{doc.title}}</div>
@@ -11,15 +11,15 @@
 					</div>
 				</div>
 				<div class="bar">
-					<div @click="edit(doc.file)"><vector class="button" src="~@/assets/icons/outline-edit-24px.svg"></vector></div>
-					<div @click="folder(doc.file)"><vector class="button" src="~@/assets/icons/outline-folder_open-24px.svg"></vector></div>
-					<div class="fillH"></div>
-					<div @click="trash(doc.file)"><vector class="button" src="~@/assets/icons/outline-delete-24px.svg"></vector></div>
+					<div @click="edit(doc.file)"><vector class="button" src="~@/assets/icons/outline-edit-24px.svg" /></div>
+					<div @click="folder(doc.file)"><vector class="button" src="~@/assets/icons/outline-folder_open-24px.svg" /></div>
+					<div class="fillH" />
+					<div @click="trash(doc.file)"><vector class="button" src="~@/assets/icons/outline-delete-24px.svg" /></div>
 				</div>
 			</div>
 		</div>
 		<div>
-			<div class="cornerBtn" @click="sheet.spawnChild(sheet ,'create-collection')">New</div>
+			<div class="cornerBtn" @click="sheet.spawnChild(sheet ,'createCollection')">New</div>
 		</div>
 	</div>
 </template>
@@ -31,7 +31,7 @@ import AppData from '../classes/AppData'
 import { shell } from 'electron'
 
 export default {
-	name: 'collection-overview',
+	name: 'collectionOverview',
 	props: ['sheet'],
 	data: function () {
 		return { }
@@ -45,7 +45,7 @@ export default {
 		open: function(path) {
 			if (this._exists(path))
 				if (!this._alreadyOpen(path))
-					this.sheet.spawnChild(this.sheet, 'collection-index', { path });
+					this.sheet.spawnChild(this.sheet, 'collectionIndex', { path })
 		},
 		/**
 		 * Opens Collection and calls editCollection
@@ -54,14 +54,14 @@ export default {
 		 */
 		edit: function(path) {
 			if (this._exists(path)) {
-				let nextSheet;
-				if (nextSheet = this._alreadyOpen(path)) {
-					nextSheet._editCollection();
+				let nextSheet = this._alreadyOpen(path)
+				if (nextSheet) {
+					nextSheet._editCollection()
 				} else {
-					this.sheet.spawnChild(this.sheet, 'collection-index', {
+					this.sheet.spawnChild(this.sheet, 'collectionIndex', {
 						path,
 						callOnMount: [{ name: 'editCollection',args: [] }]
-					});
+					})
 				}
 			}
 		},
@@ -80,12 +80,12 @@ export default {
 		 * @returns {boolean} true if file exists
 		 */
 		_exists: function(path) {
-			let exists = AppData.checkForFile(path);
+			let exists = AppData.checkForFile(path)
 			if (!exists) {
 				//TODO notification
-				this.$store.dispatch('Settings/removeDocument', path);
+				this.$store.dispatch('Settings/removeDocument', path)
 			}
-			return exists;
+			return exists
 		},
 		/**
 		 * Checks if the collection is already open
@@ -93,12 +93,12 @@ export default {
 		 * @returns {object} false if not open or vue-instance if open
 		 */
 		_alreadyOpen: function(path) {
-			let nextSheet = this.sheet.get(this.sheet.nr+1);
-			if (!nextSheet) return false;
-			if (!nextSheet.data) return false;
-			if (!nextSheet.data.path) return false;
-			if (nextSheet.data.path !== path) return false;
-			return nextSheet;
+			let nextSheet = this.sheet.get(this.sheet.nr+1)
+			if (!nextSheet) return false
+			if (!nextSheet.data) return false
+			if (!nextSheet.data.path) return false
+			if (nextSheet.data.path !== path) return false
+			return nextSheet
 		},
 		/**
 		 * Look at Helper-Class
