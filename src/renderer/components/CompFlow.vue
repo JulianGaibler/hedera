@@ -1,9 +1,14 @@
 <template>
 	<div id="compFlow">
-		<horizontal-anim :callback="animEnded">
-			<div v-for="sheet in sheets" :key="sheet.nr" :class="['sheet', (sheet.nr===1)?'first':'child']" :ref="'s'+sheet.nr" :style="{ 'z-index': sheet.nr }">
-				<div class="inactive"></div>
-				<component :sheet="sheet" :is="sheet.comp"></component>
+		<horizontal-anim :callback="_animEnded">
+			<div
+				v-for="sheet in sheets"
+				:key="sheet.nr"
+				:class="['sheet', (sheet.nr===0)?'first':'child']"
+				:ref="'s'+sheet.nr"
+				:style="{ 'z-index': sheet.nr }"
+			>
+				<component :sheet="sheet" :ref="'c'+sheet.nr" :is="sheet.comp" :data="sheet.data" @compFlow="sheetCall($event)"></component>
 			</div>
 		</horizontal-anim>
 	</div>
@@ -13,84 +18,137 @@
 import Vue from 'vue'
 import VueScrollTo from 'vue-scrollto'
 
-import perfectChild from './PerfectChild'
 import horizontalAnim from './elements/HorizontalAnim'
+import perfectChild from './PerfectChild'
+import collectionOverview from './CollectionOverview'
+import collectionIndex from './CollectionIndex'
+import createCollection from './CreateCollection'
 
 export default {
 	name: 'comp-flow',
-	components: { perfectChild, horizontalAnim },
-		data: function () {
+	components: {
+		horizontalAnim,
 
-			let scrollOptions = {
-				container: '#compFlow',
-				easing: [0.45, 0.05, 0.55, 0.95],
-				offset: -60,
-				force: true,
-				cancelable: true,
-				x: true,
-				y: false
-			}
+		perfectChild,
+		collectionOverview,
+		createCollection,
+		collectionIndex
+	},
+	data: function () {
+		// Settings for Vue-ScrollTo
+		let scrollOptions = {
+			container: '#compFlow',
+			easing: [0.45, 0.05, 0.55, 0.95],
+			offset: -60,
+			force: true,
+			cancelable: true,
+			x: true,
+			y: false,
+		}
 
-			return {
-				focus: 0,
-				nextFocus: null,
-				sheets: [],
-				scrollOptions,
+		return {
+			focus: 0,
+			nextFocus: null,
+			sheets: [],
+			scrollOptions,
 		}
 	},
 	mounted: function () {
-		this.spawnNext('perfect-child', {});
+		this._spawnNext('collection-overview', {});
+		//this.spawnNext('collection-index', { path:'/Users/Julian/Documents/StGB.ivy' });
 	},
 	methods: {
-		spawnNext: function(comp, data) {
+		/**
+		 * Appends component as last child
+		 * @param {string} comp - name of component to be opened
+		 * @param {object} data - data to give to the child
+		 */
+		_spawnNext: function(comp, data) {
 			let len = this.sheets.length;
 			this.sheets.splice(len, 0, {
-				nr: len+1,
+				nr: len,
 				comp: comp,
 				data: data,
+				get: this.getSheet,
 				spawnChild: this.spawnChild,
 				closeChild: this.closeChild,
 				closeSelf: this.closeSelf,
 				focusChild: this.focusChild,
 				focusParent: this.focusParent,
 			})
-			this.focus = len+1;
+			this.focus = len;
 		},
-		spawnChild: function(nr, comp, data) {
+		/**
+		 * Closes all existing children and created new one
+		 * @param {object} sheet - sheet that wants to create child
+		 * @param {string} comp - name of component to be opened
+		 * @param {object} data - data to give to the child
+		 */
+		spawnChild: function(sheet, comp, data) {
 			let len = this.sheets.length;
-			if (len > nr+1) 
-				this.closeChild(nr+1);
-			if (len > nr) {
-				this.sheets[nr+1].data = data;
-				Vue.set(sheets[nr+1], 'comp', comp);
-			} else {
-				this.spawnNext(comp, data);
-			}
+			if (len > sheet.nr+1) this.closeChild(sheet);
+			Vue.nextTick(() => {
+				this._spawnNext(comp, data);
+			});
 		},
-		closeChild: function(nr) {
-			this.sheets.splice(nr)
+		/**
+		 * @param {number} sheet-nr
+	 	 * @returns {object} Vue-Instance of sheet
+		 */
+		getSheet: function(nr) {
+			if (this.$refs['c'+nr]) 
+				return this.$refs['c'+nr][0];
+			else
+				return undefined;
 		},
-		closeSelf: function(nr) {
-			this.sheets.splice(nr-1)
+		/**
+		 * Closes given sheets child and all of it's children
+		 * @param {object} sheet-object of the callee
+		 */
+		closeChild: function(sheet) {
+			this.sheets.splice(sheet.nr+1)
 		},
-		focusChild: function(nr) {
-			if (this.sheets.length > nr)
-				this.focusSheet(nr+1);
+		/**
+		 * Closes given sheet and all children
+		 * @param {object} sheet-object of the callee
+		 */
+		closeSelf: function(sheet) {
+			this.sheets.splice(sheet.nr)
 		},
-		focusParent: function(nr) {
-			if (nr > 0)
-				this.focusSheet(nr-1);
+		/**
+		 * Focus and scroll to child of sheet
+		 * @param {object} sheet-object of the callee
+		 */
+		focusChild: function(sheet) {
+			if (this.sheets.length > sheet.nr)
+				this.focusSheet(sheet.nr+1);
 		},
+		/**
+		 * Focus and scroll to parent of sheet
+		 * @param {number} nr - sheet-nr to scroll to
+		 */
+		focusParent: function(sheet) {
+			if (sheet.nr > 0)
+				this.focusSheet(sheet.nr-1);
+		},
+		/**
+		 * Focus and scroll to sheet
+		 * @param {number} nr - sheet-nr to scroll to
+		 */
 		focusSheet: function(nr) {
 			let time = Math.abs(this.focus - nr)*300;
 			this.focus = nr;
-			VueScrollTo.scrollTo(this.$refs['s'+nr][0], time, this.scrollOptions);
+			if (this.sheets.length > 1) VueScrollTo.scrollTo(this.$refs['s'+nr][0], time, this.scrollOptions);
 		},
-		animEnded: function() {
-			VueScrollTo.scrollTo(this.$refs['s'+this.focus][0], 500, this.scrollOptions);
+		/**
+		 * Callback for when horizontal-animation is finished
+		 */
+		_animEnded: function() {
+			if (this.sheets.length > 1)
+				VueScrollTo.scrollTo(this.$refs['s'+this.focus][0], 500, this.scrollOptions);
 		}
 	}
-	}
+}
 </script>
 
 <style>

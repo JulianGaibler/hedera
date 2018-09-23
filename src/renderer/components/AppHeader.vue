@@ -1,6 +1,6 @@
 <template>
   <header>
-    <div class="logo"><img src="~@/assets/logo.svg" alt="hedera"></div>
+    <vector class="logo" src="~@/assets/logo.svg"></vector>
     <div class="navigation"><div></div></div>
   </header>
 </template>

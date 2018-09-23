@@ -2,6 +2,9 @@ import Vue from 'vue'
 
 import App from './App'
 import store from './store'
+import Vector from './components/elements/Vector'
+
+Vue.component('vector', Vector)
 
 import css from './assets/styles/main.scss';
 
