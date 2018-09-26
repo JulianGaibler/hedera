@@ -8,8 +8,8 @@
 		<hr class="spacer">
 		<div>
 			<div class="dist hAlign">
-				<h3 class="flexGrow">Main Modules</h3>
-				<div @click="editCollection()"><vector class="iconButton" src="~@/assets/icons/outline-add-24px.svg" /></div>
+				<h3 class="flexGrow">{{ $t('info.modules.main') }}</h3>
+				<div @click="collection.createModule(1)"><vector class="iconButton" src="~@/assets/icons/outline-add-24px.svg" /></div>
 			</div>
 			<ul>
 				<li>Dancing in a Room</li>
@@ -17,7 +17,7 @@
 				<li>Talk to Me</li>
 			</ul>
 			<div class="dist hAlign">
-				<h3 class="flexGrow">Reuseable Modules</h3>
+				<h3 class="flexGrow">{{ $t('info.modules.reuseable') }}</h3>
 				<div @click="editCollection()"><vector class="iconButton" src="~@/assets/icons/outline-add-24px.svg" /></div>
 			</div>
 			<ul>
@@ -26,7 +26,7 @@
 				<li>Hillside Boys</li>
 			</ul>
 			<div class="dist hAlign">
-				<h3 class="flexGrow">Reuseable Terms</h3>
+				<h3 class="flexGrow">{{ $t('info.terms.reuseable') }}</h3>
 				<div @click="editCollection()"><vector class="iconButton" src="~@/assets/icons/outline-add-24px.svg" /></div>
 			</div>
 			<ul>

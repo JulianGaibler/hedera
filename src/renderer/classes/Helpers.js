@@ -57,4 +57,16 @@ export default class Helpers {
 	static getRandomInt(min, max) {
 		return Math.floor(Math.random() * (max - min + 1)) + min
 	}
+
+	/**
+	 * Generates a random module ID
+	 *
+	 * @param {string} prefix [optional]
+	 * @returns {string} module ID
+	 */
+	static getRandomID(prefix) {
+		let id = Math.random().toString(36).replace(/[^a-z0-9]+/g, '').substr(1)
+		if (prefix) return prefix+=`_${id}`
+		return id
+	}
 }

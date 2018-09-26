@@ -6,8 +6,8 @@
 					<div>{{doc.title_short}}</div>
 					<div>{{doc.title}}</div>
 					<div>
-						<div>{{doc.stats.modules}} modules</div>
-						<div>{{doc.stats.terms}} terms</div>
+						<div>{{ $tc('info.modules._', doc.stats.modules) }}</div>
+						<div>{{ $tc('info.terms._', doc.stats.terms) }}</div>
 					</div>
 				</div>
 				<div class="bar">
@@ -19,7 +19,8 @@
 			</div>
 		</div>
 		<div>
-			<div class="cornerBtn" @click="sheet.spawnChild(sheet ,'createCollection')">New</div>
+			<div class="cornerBtn" @click="sheet.spawnChild(sheet ,'createCollection')">{{ $t('action.open') }}</div>
+			<div class="cornerBtn" @click="sheet.spawnChild(sheet ,'createCollection')">{{ $t('action.new.collection') }}</div>
 		</div>
 	</div>
 </template>
@@ -56,7 +57,7 @@ export default {
 			if (this._exists(path)) {
 				let nextSheet = this._alreadyOpen(path)
 				if (nextSheet) {
-					nextSheet._editCollection()
+					nextSheet.editCollection()
 				} else {
 					this.sheet.spawnChild(this.sheet, 'collectionIndex', {
 						path,

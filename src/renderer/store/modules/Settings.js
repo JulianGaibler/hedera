@@ -1,6 +1,7 @@
 import AppData from '../../classes/AppData'
 
 const state = {
+	lang: 'en',
 	recentDocuments: []
 }
 

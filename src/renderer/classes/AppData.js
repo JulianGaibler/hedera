@@ -49,6 +49,7 @@ export default class AppData {
 			main_modules: [],
 			reusable_modules: [],
 			terms: [],
+			modules: [],
 		}
 
 		this.saveCollection(file, data)

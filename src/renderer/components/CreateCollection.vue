@@ -2,8 +2,8 @@
 	<div class="bottombar">
 		<div class="listMenu">
 			<div class="dist spacer">
-				<h2 v-if="data" class="grey">Edit Collection</h2>
-				<h2 v-else class="grey">New Collection</h2>
+				<h2 v-if="data" class="grey">{{ $t('action.edit.collection') }}</h2>
+				<h2 v-else class="grey">{{ $t('action.new.collection') }}</h2>
 			</div>
 			<hr class="spacer">
 			<div class="dist">
@@ -16,9 +16,9 @@
 			</div>
 		</div>
 		<div>
-			<div class="cornerBtn" @click="sheet.closeSelf(sheet)">Cancel</div>
-			<div v-if="data" class="cornerBtn" @click="_submit">Change</div>
-			<div v-else class="cornerBtn" @click="_submit">Create</div>
+			<div class="cornerBtn" @click="sheet.closeSelf(sheet)">{{ $t('action.cancel') }}</div>
+			<div v-if="data" class="cornerBtn" @click="_submit">{{ $t('action.change') }}</div>
+			<div v-else class="cornerBtn" @click="_submit">{{ $t('action.create') }}</div>
 		</div>
 	</div>
 </template>
@@ -44,19 +44,19 @@ export default {
 			title: {
 				value: this.data ? this.data.title : '',
 				type: 'text',
-				label: 'Title',
+				label: this.$t('label.title'),
 				placeholder: 'eg. Grundgesetz'
 			},
 			title_short: {
 				value: this.data ? this.data.title_short : '',
 				type: 'text',
-				label: 'Abbreviation',
+				label: this.$t('label.abbreviation'),
 				placeholder: 'eg. GG'
 			},
 			directory: {
 				value: '/Users/Julian/Documents/untitled.ivy',
 				type: 'text',
-				label: 'Location',
+				label: this.$t('label.location'),
 				placeholder: 'Absolute path of location',
 				button: {
 					src: require('../assets/icons/outline-folder_open-24px.svg'),
@@ -69,7 +69,7 @@ export default {
 				min: 0,
 				max: 359,
 				step: 1,
-				label: 'Color',
+				label: this.$t('label.color'),
 				placeholder: '0 to 360'
 			},
 		}

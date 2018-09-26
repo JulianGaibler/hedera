@@ -1,0 +1,36 @@
+{
+	"action": {
+		"open": "Open",
+		"edit": {
+			"_": "Edit",
+			"collection": "Edit Collection"
+		},
+		"delete": "Delete",
+		"cancel": "Cancel",
+		"change": "Change",
+		"done": "Done",
+		"delete": "Delete",
+		"show_in_folder": "Show in folder",
+		"new": {
+			"_": "New",
+			"collection": "New Collection"
+		}
+	},
+	"info": {
+		"modules": {
+			"_": "0 modules | 1 module | {count} modules",
+			"main": "Main Modules",
+			"reuseable": "Reuseable Modules"
+		},
+		"terms": {
+			"_": "0 terms | 1 term | {count} terms",
+			"reuseable": "Reuseable Terms"
+		}
+	},
+	"label": {
+		"title": "Title",
+		"abbreviation": "Abbreviation",
+		"location": "Location",
+		"color": "Color"
+	}
+}
