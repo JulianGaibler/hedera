@@ -12,27 +12,21 @@
 				<div @click="collection.createModule(1)"><vector class="iconButton" src="~@/assets/icons/outline-add-24px.svg" /></div>
 			</div>
 			<ul>
-				<li>Dancing in a Room</li>
-				<li>River</li>
-				<li>Talk to Me</li>
+				<li v-for="obj in main_modules" :key="obj._id">{{obj.title ? obj.title : 'untitled'}}</li>
 			</ul>
 			<div class="dist hAlign">
 				<h3 class="flexGrow">{{ $t('info.modules.reuseable') }}</h3>
-				<div @click="editCollection()"><vector class="iconButton" src="~@/assets/icons/outline-add-24px.svg" /></div>
+				<div @click="collection.createModule(2)"><vector class="iconButton" src="~@/assets/icons/outline-add-24px.svg" /></div>
 			</div>
 			<ul>
-				<li>Los Angeles</li>
-				<li>Das ist Berlin</li>
-				<li>Hillside Boys</li>
+				<li v-for="obj in reusable_modules" :key="obj._id">{{obj._id}}</li>
 			</ul>
 			<div class="dist hAlign">
 				<h3 class="flexGrow">{{ $t('info.terms.reuseable') }}</h3>
-				<div @click="editCollection()"><vector class="iconButton" src="~@/assets/icons/outline-add-24px.svg" /></div>
+				<div @click="collection.createTerm()"><vector class="iconButton" src="~@/assets/icons/outline-add-24px.svg" /></div>
 			</div>
 			<ul>
-				<li>You Don't Know Me</li>
-				<li>This Body</li>
-				<li>Nothing burns like the Cold</li>
+				<li v-for="obj in reuseable_terms" :key="obj._id">{{obj._id}}</li>
 			</ul>
 		</div>
 	</div>
@@ -56,28 +50,53 @@ export default {
 	 */
 	data: function () {
 		return {
-			collection: {}
+			collection: {},
+			loading: true,
+
+			main_modules: [],
+			reusable_modules: [],
+			reuseable_terms: [],
 		}
 	},
 	components: { },
 	mounted: function() {
-		this.collection = {}
-		try {
-			Vue.set(this, 'collection', new Collection(this.data.path))
+		// 1. Loading Collection
+		Vue.set(this, 'collection', new Collection(this.data.path, this.$menubar))
+		
+		// 2. Loading collection file and setting up database
+		this.collection.init().then(() => {
+			// 3. Updating stats in Collection-Overview
 			this._updateInfo()
 
+			// 4. Fetching existing modules
+			this.updateModules()
+			this.updateTerms()
+
+			// 5. subscribing to changes in db
+			this.collection.events.subscribe('modules', (changes) => {
+				this.updateModules(changes)
+			})
+			this.collection.events.subscribe('terms', (changes) => {
+				this.updateTerms(changes)
+			})
+
+			// 6. We're done with the setup
+			this.loading = false
+
+			// 7. Executing additionaly passed methods
 			if (this.data.callOnMount) {
 				for (var i = 0; i < this.data.callOnMount.length; i++) {
 					this[this.data.callOnMount[i].name].apply(this, this.data.callOnMount[i].args)
 				}
 			}
+		}).catch(() => {
+			// TODO
+		})
 
-		} catch (err) {
-			//TODO
-		}
 		remote.getCurrentWindow().setRepresentedFilename(this.data.path)
 	},
 	beforeDestroy: function() {
+		this.collection.close()
 		remote.getCurrentWindow().setRepresentedFilename('')
 	},
 	methods: {
@@ -121,7 +140,21 @@ export default {
 				}
 			}
 			this.$store.dispatch('Settings/updateDocument', info)
-		}
+		},
+		updateModules: function() {
+			this.collection.db.modules.where('dependency_type').equals(1).toArray().then(array => {
+				this.main_modules = array
+			})
+			this.collection.db.modules.where('dependency_type').equals(2).toArray().then(array => {
+				this.reusable_modules = array
+			})
+
+		},
+		updateTerms: function() {
+			this.collection.db.terms.toArray().then(array => {
+				this.reuseable_terms = array
+			})
+		},
 	},
 	computed: {
 		h1Style: function() {

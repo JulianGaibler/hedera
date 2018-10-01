@@ -8,6 +8,7 @@
 		"delete": "Delete",
 		"cancel": "Cancel",
 		"change": "Change",
+		"create": "Create",
 		"done": "Done",
 		"delete": "Delete",
 		"show_in_folder": "Show in folder",
@@ -26,6 +27,9 @@
 			"_": "0 terms | 1 term | {count} terms",
 			"reuseable": "Reuseable Terms"
 		}
+	},
+	"sections": {
+		"settings": "Settings"
 	},
 	"label": {
 		"title": "Title",

@@ -1,4 +1,5 @@
 import { app, BrowserWindow } from 'electron'
+import './NativeMenu'
 
 /**
  * Set `__static` path to static files in production
@@ -17,6 +18,7 @@ function createWindow () {
 	/**
 	 * Initial window options
 	 */
+
 	mainWindow = new BrowserWindow({
 		height: 563,
 		useContentSize: true,
