@@ -56,6 +56,7 @@ let webConfig = {
             ]
           }
         }
+      },
       {
         test: /\.(png|jpe?g|gif)(\?.*)?$/,
         use: {

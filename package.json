@@ -19,7 +19,7 @@
 	},
 	"build": {
 		"productName": "hedera",
-		"appId": "org.simulatedgreg.electron-vue",
+		"appId": "com.qvieo.hedera",
 		"directories": {
 			"output": "build"
 		},
