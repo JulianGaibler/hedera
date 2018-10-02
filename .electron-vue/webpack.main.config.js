@@ -5,6 +5,7 @@ process.env.BABEL_ENV = 'main'
 const path = require('path')
 const { dependencies } = require('../package.json')
 const webpack = require('webpack')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const BabiliWebpackPlugin = require('babili-webpack-plugin')
 
@@ -53,9 +54,13 @@ if (process.env.NODE_ENV !== 'production') {
   mainConfig.plugins.push(
     new webpack.DefinePlugin({
       '__static': `"${path.join(__dirname, '../static').replace(/\\/g, '\\\\')}"`
+    }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': '"development"'
     })
   )
 }
+
 
 /**
  * Adjust mainConfig for production settings
