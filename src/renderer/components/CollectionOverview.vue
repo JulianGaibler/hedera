@@ -11,10 +11,10 @@
 					</div>
 				</div>
 				<div class="bar">
-					<div @click="edit(doc.file)"><vector class="button" src="~@/assets/icons/outline-edit-24px.svg" /></div>
-					<div @click="folder(doc.file)"><vector class="button" src="~@/assets/icons/outline-folder_open-24px.svg" /></div>
+					<div @click="edit(doc.file)"><IconEdit class="button" /></div>
+					<div @click="folder(doc.file)"><IconOpen class="button" /></div>
 					<div class="fillH" />
-					<div @click="trash(doc.file)"><vector class="button" src="~@/assets/icons/outline-delete-24px.svg" /></div>
+					<div @click="trash(doc.file)"><IconDelete class="button" /></div>
 				</div>
 			</div>
 		</div>
@@ -31,13 +31,21 @@ import Helpers from '../classes/Helpers'
 import AppData from '../classes/AppData'
 import { shell } from 'electron'
 
+import IconEdit from '../assets/icons/outline-edit-24px.svg'
+import IconOpen from '../assets/icons/outline-folder_open-24px.svg'
+import IconDelete from '../assets/icons/outline-delete-24px.svg'
+
 export default {
 	name: 'collectionOverview',
 	props: ['sheet'],
 	data: function () {
 		return { }
 	},
-	components: { },
+	components: {
+		IconEdit,
+		IconOpen,
+		IconDelete,
+	},
 	methods: {
 		/**
 		 * Opens Collection if file exists and not already open

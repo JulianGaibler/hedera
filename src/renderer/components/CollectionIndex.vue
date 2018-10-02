@@ -9,21 +9,21 @@
 		<div>
 			<div class="dist hAlign">
 				<h3 class="flexGrow">{{ $t('info.modules.main') }}</h3>
-				<div @click="collection.createModule(1)"><vector class="iconButton" src="~@/assets/icons/outline-add-24px.svg" /></div>
+				<div @click="collection.createModule(1)"><div class="iconButton"><iconAdd /></div></div>
 			</div>
 			<ul>
 				<li v-for="obj in main_modules" :key="obj._id">{{obj.title ? obj.title : 'untitled'}}</li>
 			</ul>
 			<div class="dist hAlign">
 				<h3 class="flexGrow">{{ $t('info.modules.reuseable') }}</h3>
-				<div @click="collection.createModule(2)"><vector class="iconButton" src="~@/assets/icons/outline-add-24px.svg" /></div>
+				<div @click="collection.createModule(2)"><div class="iconButton"><iconAdd /></div></div>
 			</div>
 			<ul>
 				<li v-for="obj in reusable_modules" :key="obj._id">{{obj._id}}</li>
 			</ul>
 			<div class="dist hAlign">
 				<h3 class="flexGrow">{{ $t('info.terms.reuseable') }}</h3>
-				<div @click="collection.createTerm()"><vector class="iconButton" src="~@/assets/icons/outline-add-24px.svg" /></div>
+				<div @click="collection.createTerm()"><div class="iconButton"><iconAdd /></div></div>
 			</div>
 			<ul>
 				<li v-for="obj in reuseable_terms" :key="obj._id">{{obj._id}}</li>
@@ -37,6 +37,8 @@ import Vue from 'vue'
 import Collection from '../classes/Collection'
 import Helpers from '../classes/Helpers'
 import { remote } from 'electron'
+
+import iconAdd from '../assets/icons/outline-add-24px.svg'
 
 export default {
 	name: 'collectionIndex',
@@ -58,7 +60,9 @@ export default {
 			reuseable_terms: [],
 		}
 	},
-	components: { },
+	components: {
+		iconAdd
+	},
 	mounted: function() {
 		// 1. Loading Collection
 		Vue.set(this, 'collection', new Collection(this.data.path, this.$menubar))

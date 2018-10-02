@@ -1,15 +1,18 @@
 <template>
 	<header>
-		<vector class="logo" src="~@/assets/logo.svg" />
+		<div class="logo"><IconLogo /></div>
 		<div class="navigation"><div /></div>
 	</header>
 </template>
 
 <script>
+import IconLogo from '../assets/logo.svg'
 
 export default {
 	name: 'appHeader',
-	components: { },
+	components: {
+		IconLogo
+	},
 	methods: { }
 }
 </script>

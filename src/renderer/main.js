@@ -4,10 +4,7 @@ import store from './store'
 import i18n from './lang'
 import MenuHandler from './classes/MenuHandler'
 import Dexie from 'dexie'
-import Vector from './components/elements/Vector'
 import './assets/styles/main.scss'
-
-Vue.component('vector', Vector)
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.config.productionTip = false
