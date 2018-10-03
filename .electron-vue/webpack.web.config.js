@@ -116,6 +116,7 @@ let webConfig = {
  * Adjust webConfig for production settings
  */
 if (process.env.NODE_ENV === 'production') {
+  webConfig.mode = 'production'
   webConfig.devtool = ''
 
   webConfig.plugins.push(
