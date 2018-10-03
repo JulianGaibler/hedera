@@ -9,6 +9,8 @@ $greyGradient: linear-gradient(135deg, #dcdcdc 0%, #9a9a9a 100%);
 
 @import url('https://fonts.googleapis.com/css?family=Roboto|Roboto+Slab');
 
+
+
 * {
 	-webkit-font-smoothing: antialiased;
 	margin: 0;
@@ -24,7 +26,11 @@ body {
 	color: $hBlack;
 	user-select: none;
 	cursor: default;
-	font-family: 'Roboto Slab', serif;
+	// font-family: 'Roboto Slab', serif;
+}
+
+body, input, button {
+	font: caption;
 }
 
 hr {
@@ -77,6 +83,7 @@ header {
 
 ::-webkit-scrollbar {
 	width: 0.25rem;
+	position: absolute;
 }
 ::-webkit-scrollbar-track {
 	background: none;
@@ -112,7 +119,6 @@ header {
 		}
 		&.child {
 			border-left: $hBorder;
-			box-shadow: 0 0 3.125rem rgba(0, 0, 0, 0.06);
 		}
 	}
 }
@@ -154,7 +160,11 @@ header {
 
 		> div:nth-child(1) { font-size: 2.625rem; }
 		> div:nth-child(2) { flex: 1; font-size: 1.4375rem; white-space: normal; }
-		> div:nth-child(3) { font-size: 0.875rem; }
+		> div:nth-child(3) {
+			font-size: 0.875rem;
+			font: caption;
+			font-weight: 500;
+		}
 
 	}
 	.bar {
@@ -197,7 +207,6 @@ header {
 	color: $hBlack;
 	background: #fff;
 	display: inline-block;
-	font-family: 'Roboto Slab', serif;
 	font-size: 1.125rem;
 	padding: .4rem 1.4rem .4rem .7rem;
 	padding-right: 1.4rem;
@@ -236,6 +245,7 @@ header {
 		fill: $hLightGrey;
 	}
 	h1 {
+		font-family: 'Roboto Slab', serif;
 		font-size: 2.75rem;
 		background: $greyGradient;
 		-webkit-background-clip: text;
@@ -243,6 +253,7 @@ header {
 		font-weight: 400;
 	}
 	h2 {
+		font-family: 'Roboto Slab', serif;
 		font-size: 1.5rem;
 		font-weight: 400;
 		.grey {
@@ -250,9 +261,10 @@ header {
 		}
 	}
 	h3 {
-		font-size: 1.5rem;
+		font-size: 1.2rem;
 		color: $hBlack;
 		font-weight: 400;
+		margin-bottom: 0.625rem;
 	}
 
 	ul {
@@ -294,7 +306,6 @@ header {
 		label, span {
 			font-size: 0.75rem;
 			color: #3f3f3f;
-			font-family: 'Roboto', serif;
 			float: left;
 		}
 		span {
@@ -303,7 +314,6 @@ header {
 		}
 		input {
 			font-size: 1rem;
-			font-family: 'Roboto Slab', serif;
 			&::placeholder {
 				opacity: .5;
 			}
