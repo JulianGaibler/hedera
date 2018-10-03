@@ -35,14 +35,21 @@ const menuTemplate = [
 				id: 'redo',
 				accelerator: 'Shift+CmdOrCtrl+Z',
 				click: (a, b) => send(a, b)
-			}
+			},
+			{type:'separator'},
+			{role: 'cut'},
+			{role: 'copy'},
+			{role: 'paste'},
+			{role: 'pasteandmatchstyle'},
+			{role: 'delete'},
+			{role: 'selectall'}
 		]
 	},
 	{
 		role: 'help',
 		submenu: [
 			{
-				label: 'event',
+				label: 'event2',
 				id: 'event',
 				click: (a, b) => send(a, b)
 			}
