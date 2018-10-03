@@ -9,6 +9,12 @@ import './assets/styles/main.scss'
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.config.productionTip = false
 
+// https://electronjs.org/docs/tutorial/security
+window.ELECTRON_DISABLE_SECURITY_WARNINGS = true
+
+// window.eval = global.eval = function () {
+// 	throw new Error('Sorry, this app does not support window.eval().')
+// }
 
 // Keeping the database clean
 Dexie.getDatabaseNames((dbs) => {

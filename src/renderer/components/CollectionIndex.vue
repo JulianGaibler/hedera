@@ -3,7 +3,7 @@
 		<div class="dist spacer hAlign">
 			<h1 :style="h1Style">{{collection.data?collection.data.title_short:'???'}}</h1>
 			<h2 class="flexGrow">{{collection.data?collection.data.title:'???'}}</h2>
-			<div @click="editCollection()"><vector class="iconButton" src="~@/assets/icons/outline-edit-24px.svg" /></div>
+			<div @click="editCollection()"><div class="iconButton"><iconEdit /></div></div>
 		</div>
 		<hr class="spacer">
 		<div>
@@ -38,6 +38,7 @@ import Collection from '../classes/Collection'
 import Helpers from '../classes/Helpers'
 import { remote } from 'electron'
 
+import iconEdit from '../assets/icons/outline-edit-24px.svg'
 import iconAdd from '../assets/icons/outline-add-24px.svg'
 
 export default {
@@ -61,7 +62,8 @@ export default {
 		}
 	},
 	components: {
-		iconAdd
+		iconAdd,
+		iconEdit
 	},
 	mounted: function() {
 		// 1. Loading Collection

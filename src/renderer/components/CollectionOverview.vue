@@ -11,10 +11,10 @@
 					</div>
 				</div>
 				<div class="bar">
-					<div @click="edit(doc.file)"><IconEdit class="button" /></div>
-					<div @click="folder(doc.file)"><IconOpen class="button" /></div>
+					<div class="button" @click="edit(doc.file)"><IconEdit /></div>
+					<div class="button" @click="folder(doc.file)"><IconOpen /></div>
 					<div class="fillH" />
-					<div @click="trash(doc.file)"><IconDelete class="button" /></div>
+					<div class="button" @click="trash(doc.file)"><IconDelete /></div>
 				</div>
 			</div>
 		</div>

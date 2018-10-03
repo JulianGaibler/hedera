@@ -7,10 +7,10 @@
 			</div>
 			<hr class="spacer">
 			<div class="dist">
-				<formInput :key="0" v-model="buttons.title.value" :config="buttons.title" />
-				<formInput :key="1" v-model="buttons.title_short.value" :config="buttons.title_short" />
-				<formInput v-if="!data" :key="2" v-model="buttons.directory.value" :config="buttons.directory" />
-				<formInput :key="3" v-model="buttons.color.value" :config="buttons.color">
+				<formInput v-model="buttons.title.value" :config="buttons.title" />
+				<formInput v-model="buttons.title_short.value" :config="buttons.title_short" />
+				<formInput v-if="!data" v-model="buttons.directory.value" :config="buttons.directory" />
+				<formInput v-model="buttons.color.value" :config="buttons.color">
 					<div class="colorPreview" :style="{background: _getColor(parseInt(buttons.color.value))}" />
 				</formInput>
 			</div>
@@ -75,7 +75,6 @@ export default {
 		}
 
 		return {
-			rid: Math.random(),
 			path: '/Users/Julian/Documents',
 			buttons,
 		}
