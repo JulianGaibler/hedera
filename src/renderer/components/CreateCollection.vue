@@ -151,12 +151,15 @@ export default {
 			else this.$set(this.buttons.color, 'error', undefined)
 
 			if (valid && !this.data) {
-				if (AppData.createCollection({title, title_short, file, color})) {
+				let saved = AppData.createCollection({title, title_short, file, color})
+				if (saved === 0) {
 					this.sheet.closeSelf(this.sheet)
 					this.sheet.get(0).open(file)
 				}
 				else {
-					this.$set(this.buttons.directory, 'error', {info: 'File already exists'})
+					if (saved === 1) this.$set(this.buttons.directory, 'error', {info: this.$t('error.file_already_exists')})
+					if (saved === 2) this.$set(this.buttons.directory, 'error', {info: this.$t('error.read_only_directory')})
+					else this.$set(this.buttons.directory, 'error', {info: this.$t('error.unknown_error')})
 				}
 			} else if (valid && this.data) {
 				this.sheet.get(this.sheet.nr-1)._editCollection(title, title_short, color)

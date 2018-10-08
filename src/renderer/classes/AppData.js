@@ -35,11 +35,11 @@ export default class AppData {
 	 * @param {string} collection.title_short - abbreviation
 	 * @param {string} collection.file - full path to file
 	 * @param {number} collection.color - number of color (0-359)
-	 * @returns {boolean} false if file already exists
+	 * @returns {number} 0 = okay, 1 = already exists, 2 = could not write file, 3 = other error
 	 */
 	static createCollection({title, title_short, file, color}) {
 		const result = Jetpack.exists(file)
-		if (result === 'file') return false
+		if (result === 'file') return 1
 
 		let data = {
 			title,
@@ -52,8 +52,7 @@ export default class AppData {
 			modules: [],
 		}
 
-		this.saveCollection(file, data)
-		return true
+		return this.saveCollection(file, data)
 	}
 
 	/**
@@ -71,10 +70,17 @@ export default class AppData {
 	 *
 	 * @param {string} file - full path to file
 	 * @param {string} data - data to be saved
+	 * @returns {boolean} true if nothing went wrong
 	 */
 	static saveCollection(file, data) {
-		const yData = Yaml.safeDump(data, { condenseFlow: true, noCompatMode: true, lineWidth: 200 })
-		Jetpack.write(file, yData)
+		try {
+			const yData = Yaml.safeDump(data, { condenseFlow: true, noCompatMode: true, lineWidth: 200 })
+			Jetpack.write(file, yData)
+		} catch(e) {
+			if (e.syscall !== undefined) return 2
+			return 3
+		}
+		return true
 	}
 
 	/**
