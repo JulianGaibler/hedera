@@ -1,7 +1,11 @@
 import AppData from '../../classes/AppData'
+import { app, remote } from 'electron'
+
+const electronApp = (app || remote.app)
 
 const state = {
-	lang: 'en',
+	lang: 'default',
+	defaultDirectory: 'default',
 	recentDocuments: []
 }
 
@@ -37,6 +41,9 @@ const mutations = {
 	},
 	removeDocument: (state, index) => {
 		state.recentDocuments.splice(index,1)
+	},
+	updateField: (state, payload) => {
+		state[payload.field] = payload.value
 	}
 }
 
@@ -63,6 +70,23 @@ const actions = {
 		}
 		return -1
 	},
+	updateField ({ commit }, data) {
+		commit('updateField', data)
+	},
+	defaultField ({ commit }, data) {
+		commit('updateField', data)
+	},
+	getField ({ state }, field) {
+		if (state[field] !== 'default')
+			return state[field]
+
+		switch (field) {
+		case 'lang':
+			return electronApp.getLocale().split('-')[0]
+		case 'defaultDirectory':
+			return electronApp.getPath('documents')
+		}
+	}
 }
 
 const _modules = {
