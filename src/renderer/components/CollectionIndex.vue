@@ -1,4 +1,5 @@
 <template>
+	<!-- TODO, loading animation -->
 	<div class="listMenu">
 		<div class="dist spacer hAlign">
 			<h1 :style="h1Style">{{collection.data?collection.data.title_short:'???'}}</h1>
@@ -12,21 +13,44 @@
 				<div @click="collection.createModule(1)"><div class="iconButton"><iconAdd /></div></div>
 			</div>
 			<ul>
-				<li v-for="obj in main_modules" :key="obj._id">{{obj.title ? obj.title : 'untitled'}}</li>
+				<li v-for="obj in main_modules"
+					:key="obj._id"
+				>
+					{{obj.title ? obj.title : $t('state.untitled')}}
+				</li>
+				<div v-if="main_modules.length < 1">
+					{{$t('warning.empty.modules')}}
+				</div>
 			</ul>
 			<div class="dist hAlign">
 				<h3 class="flexGrow">{{ $t('info.modules.reuseable') }}</h3>
 				<div @click="collection.createModule(2)"><div class="iconButton"><iconAdd /></div></div>
 			</div>
 			<ul>
-				<li v-for="obj in reusable_modules" :key="obj._id">{{obj._id}}</li>
+				<li v-for="obj in reusable_modules"
+					:key="obj._id"
+				>
+					{{obj.title ? obj.title : $t('state.untitled')}}
+				</li>
+				<div v-if="reusable_modules.length < 1">
+					{{$t('warning.empty.modules')}}
+				</div>
 			</ul>
 			<div class="dist hAlign">
 				<h3 class="flexGrow">{{ $t('info.terms.reuseable') }}</h3>
 				<div @click="collection.createTerm()"><div class="iconButton"><iconAdd /></div></div>
 			</div>
 			<ul>
-				<li v-for="obj in reuseable_terms" :key="obj._id">{{obj._id}}</li>
+				<li v-for="obj in reuseable_terms"
+					:key="obj._id"
+					@click="_openTerm(obj._id)"
+				>
+					{{obj.title ? obj.title : $t('state.untitled')}}
+				</li>
+
+				<div v-if="reuseable_terms.length < 1">
+					{{$t('warning.empty.terms')}}
+				</div>
 			</ul>
 		</div>
 	</div>
@@ -113,6 +137,11 @@ export default {
 		/**
 		 * Opens 'create-collection'-sheet as child
 		 */
+		_openTerm: function(_id) {
+		},
+		/**
+		 * Opens 'create-collection'-sheet as child
+		 */
 		editCollection: function() {
 			this.sheet.spawnChild(this.sheet, 'createCollection', {
 				title: this.collection.data.title, 
@@ -174,7 +203,3 @@ export default {
 	},
 }
 </script>
-
-<style>
-
-</style>

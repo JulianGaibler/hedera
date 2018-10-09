@@ -36,5 +36,14 @@
 		"abbreviation": "Abbreviation",
 		"location": "Location",
 		"color": "Color"
+	},
+	"state": {
+		"untitled": "untitled"
+	},
+	"warning": {
+		"empty": {
+			"modules": "No modules created",
+			"terms": "No terms created"
+		}
 	}
 }

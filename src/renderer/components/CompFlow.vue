@@ -32,7 +32,7 @@ export default {
 		perfectChild,
 		collectionOverview,
 		createCollection,
-		collectionIndex
+		collectionIndex,
 	},
 	data: function () {
 		// Settings for Vue-ScrollTo
