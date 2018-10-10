@@ -45,5 +45,10 @@
 			"modules": "No modules created",
 			"terms": "No terms created"
 		}
+	},
+	"error": {
+		"file_already_exists": "File already exists",
+		"read_only_directory": "Could not create file at this location",
+		"unknown_error": "An unknown error occured"
 	}
 }

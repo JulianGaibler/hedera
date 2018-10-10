@@ -23,6 +23,7 @@ import perfectChild from './PerfectChild'
 import collectionOverview from './CollectionOverview'
 import collectionIndex from './CollectionIndex'
 import createCollection from './CreateCollection'
+import settings from './Settings'
 
 export default {
 	name: 'compFlow',
@@ -33,6 +34,7 @@ export default {
 		collectionOverview,
 		createCollection,
 		collectionIndex,
+		settings,
 	},
 	data: function () {
 		// Settings for Vue-ScrollTo
@@ -55,7 +57,7 @@ export default {
 	},
 	mounted: function () {
 		this._spawnNext('collection-overview', {})
-		//this.spawnNext('collection-index', { path:'/Users/Julian/Documents/StGB.ivy' });
+		this._spawnNext('settings')
 	},
 	methods: {
 		/**
