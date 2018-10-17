@@ -311,14 +311,13 @@ header {
 		label, span {
 			font-size: 0.75rem;
 			color: #3f3f3f;
-			float: left;
 		}
 		span {
 			padding-left: 0.3rem;
 			color: $hErrorRed;
 		}
 		input {
-			font-size: 1rem;
+			font-size: .875rem;
 			&::placeholder {
 				opacity: .5;
 			}
@@ -372,5 +371,25 @@ header {
 	svg {
 		width: 1.5rem;
 		height: 1.5rem;
+	}
+}
+
+.itemList {
+	background-color: $hTextbox;
+	margin-bottom: .8rem;
+	padding: 0.3rem 0;
+	.item {
+		margin: 0.6rem 0.9rem;
+		input[type="checkbox"], input[type="radio"] {
+			zoom: 1.1;
+			margin-top: .1rem;
+			margin-right: .4rem;
+		}
+		label {
+			position: relative;
+			display: flex;
+			font-size: .875rem;
+			align-items: center;
+		}
 	}
 }
