@@ -24,6 +24,7 @@ import collectionOverview from './CollectionOverview'
 import collectionIndex from './CollectionIndex'
 import createCollection from './CreateCollection'
 import settings from './Settings'
+import termEditor from './TermEditor'
 
 export default {
 	name: 'compFlow',
@@ -35,6 +36,7 @@ export default {
 		createCollection,
 		collectionIndex,
 		settings,
+		termEditor
 	},
 	data: function () {
 		// Settings for Vue-ScrollTo

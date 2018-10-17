@@ -6,7 +6,8 @@
 		<hr class="spacer">
 		<div class="dist">
 			<h3>Language</h3>
-
+			<formOptions v-model="va" :config="config" />
+			<p>{{va}}</p>
 			<h3>Default Directory</h3>
 			<formInput v-model="defaultDirectory" :config="buttons.directory" />
 		</div>
@@ -35,6 +36,12 @@ export default {
 
 		return {
 			buttons,
+			va: ['disable'],
+			config: {
+				type: 'checkbox',
+				options: [
+					{value: 'disable', label: 'use System default'}				]
+			}
 		}
 	},
 	components: {
