@@ -8,6 +8,11 @@ export default class MenuHandler {
 		ipcRenderer.on('menuAction', (event, arg) => {this.updateHandler(arg, event)})
 	}
 
+	/**
+	 * Subscribes to menu-item events
+	 * @param  {string} id of menu item 
+	 * @param  {function} function to be called when clicked
+	 */
 	subscribe(menuItem, func) {
 		let t = this.subscriptions
 		// create array if this is the first listener for this menu item
@@ -16,6 +21,11 @@ export default class MenuHandler {
 		t[menuItem].push(func)
 	}
 
+	/**
+	 * Unsubscribes menu-item events
+	 * @param  {string} id of menu item 
+	 * @param  {function} function to be called when clicked
+	 */
 	unsubscribe(menuItem, func) {
 		const t = this.subscriptions
 		// check if the menu item does even exist
@@ -26,6 +36,9 @@ export default class MenuHandler {
 		if (i > 0) t[menuItem].splice(i, 1)
 	}
 
+	/**
+	 * Gets called on menu-action
+	 */
 	updateHandler(menuItem, event) {
 		if (!this.subscriptions[menuItem]) return
 		for (var i = this.subscriptions[menuItem].length - 1; i >= 0; i--) {
