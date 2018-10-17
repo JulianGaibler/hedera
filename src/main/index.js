@@ -1,5 +1,5 @@
 import { app, BrowserWindow } from 'electron'
-import './NativeMenu'
+//import './NativeMenu'
 
 /**
  * Set `__static` path to static files in production
@@ -26,6 +26,26 @@ function createWindow () {
 	})
 
 	mainWindow.loadURL(winURL)
+
+	// Workaround for cut/copy/paste/close keybindings not working in devtools window on OSX
+	if (process.platform === 'darwin') {
+		mainWindow.webContents.on('devtools-opened', () => {
+			mainWindow.webContents.devToolsWebContents.executeJavaScript(`
+				window.addEventListener('keydown', function (e) {
+					if (e.keyCode === 65 && e.metaKey) {
+						document.execCommand('Select All');
+					} else if (e.keyCode === 67 && e.metaKey) {
+						document.execCommand('copy');
+					} else if (e.keyCode === 86 && e.metaKey) {
+						document.execCommand('paste');
+					} else if (e.keyCode === 87 && e.metaKey) {
+						window.close();
+					} else if (e.keyCode === 88 && e.metaKey) {
+						document.execCommand('cut');
+					}
+				});`)
+		})
+	}
 
 	mainWindow.on('closed', () => {
 		mainWindow = null
