@@ -70,7 +70,7 @@ export default class AppData {
 	 *
 	 * @param {string} file - full path to file
 	 * @param {string} data - data to be saved
-	 * @returns {boolean} true if nothing went wrong
+	 * @returns {number} see createCollection()
 	 */
 	static saveCollection(file, data) {
 		try {
@@ -80,7 +80,7 @@ export default class AppData {
 			if (e.syscall !== undefined) return 2
 			return 3
 		}
-		return true
+		return 0
 	}
 
 	/**
