@@ -1,15 +1,18 @@
-$hBlack: #222222;
+$hBlack: #222;
+$hWhite: #fff;
 $hDarkGrey: #757575;
 $hLightGrey: #a2a2a2;
-$hErrorRed: #f44336;
-$hTextbox: #f4f4f4;
+
 $hBorderColor: #e4e4e4;
 $hBorder: .0625rem solid $hBorderColor;
+$hDarkBorder: .0625rem solid $hBlack;
+$hBorderRadius: .3125rem;
+
+$hErrorRed: #f44336;
+$hBackground: #f7f7f7;
 $greyGradient: linear-gradient(135deg, #dcdcdc 0%, #9a9a9a 100%);
 
 @import url('https://fonts.googleapis.com/css?family=Roboto|Roboto+Slab');
-
-
 
 * {
 	-webkit-font-smoothing: antialiased;
@@ -26,17 +29,12 @@ body {
 	color: $hBlack;
 	user-select: none;
 	cursor: default;
+	background-color: $hBackground;
 	// font-family: 'Roboto Slab', serif;
 }
 
 body, input, button {
 	font: caption;
-}
-
-hr {
-    border: 0;
-    height: 0;
-    border-top: $hBorder;
 }
 
 input {
@@ -48,6 +46,32 @@ input {
 	}
 }
 
+h1 {
+	font-family: 'Roboto Slab', serif;
+	font-size: 2.75rem;
+	background: $greyGradient;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	font-weight: 400;
+}
+h2 {
+	font-family: 'Roboto Slab', serif;
+	font-size: 1.5rem;
+	font-weight: 400;
+	.grey {
+		color: $hDarkGrey;
+	}
+}
+h3 {
+	font-size: 1.125rem;
+	color: $hBlack;
+	font-weight: 400;
+	margin-bottom: .625rem;
+}
+p {
+	font-size: .875rem
+}
+
 #app {
 	height: 100%;
 	display: flex;
@@ -55,34 +79,39 @@ input {
 }
 
 header {
-	height: 3.4rem;
-	z-index: 999;
-	background-color: #fff;
-	display: flex;
-	box-shadow: 0px 0.125rem 0.125rem rgba(0, 0, 0, 0.04);
-	.logo {
-		// margin: 15px;
-		height: 100%;
+	-webkit-app-region: drag;
+	.menu {
+		height: 2.4rem;
 		display: flex;
-		margin: 0 20px;
-		justify-content: center;
-		svg {
-			 width: 5rem;
+
+		.left.container, .right.container {
+			flex: 1;
+			display: flex;
+			min-width: -webkit-min-content;
+		}
+		.right.container {
+			justify-content: flex-end;
+		}
+
+		.logo {
+			// margin: 15px;
+			height: 100%;
+			display: flex;
+			margin: 0 20px;
+			justify-content: center;
+			svg {
+				 width: 5rem;
+			}
 		}
 	}
-	.navigation {
-		height: 100%;
-		width: 30rem;
-		div {
-			background-color: $hTextbox;
-			width: 100%;
-			height: 90%;
-		}
+	.darwin {
+		display: block;
+		height: 22px;
 	}
 }
 
 ::-webkit-scrollbar {
-	width: 0.25rem;
+	width: .25rem;
 	position: absolute;
 }
 ::-webkit-scrollbar-track {
@@ -100,6 +129,7 @@ header {
 	display: flex;
 	overflow: hidden;
 	align-items: stretch;
+	padding-top: 1rem;
 	white-space: normal;
 	> span {
 		display: flex;
@@ -108,9 +138,9 @@ header {
 	}
 	.sheet {
 		display: inline-block;
-		background-color: white;
 		display: flex;
 		overflow-y: scroll;
+		margin: 0 2rem;
 		> div {
 			flex: 1;
 		}
@@ -118,7 +148,21 @@ header {
 			flex: 1;
 		}
 		&.child {
-			border-left: $hBorder;
+			background-color: $hWhite;
+			border: $hBorder;
+			border-top-left-radius: $hBorderRadius;
+			border-top-right-radius: $hBorderRadius;
+			box-shadow: 0 0 1rem rgba(0, 0, 0, .05);
+			border-bottom: none;
+			position: relative;
+			&::before {
+				content: '';
+				position: fixed;
+				left: 0;
+				right: 0;
+				height: 2rem;
+				background: linear-gradient(180deg, $hWhite 0%, rgba(128, 128, 128, 0) 100%)
+			}
 		}
 	}
 }
@@ -143,7 +187,7 @@ header {
 		border: $hBorder;
 		border-radius: .3125rem;
 		display: inline-block;
-		box-shadow: 0 0 2.5rem rgba(0, 0, 0, 0.06);
+		box-shadow: 0 0 2.5rem rgba(0, 0, 0, .06);
 		box-sizing: border-box;
 		display: flex;
 		flex-direction: column;
@@ -156,12 +200,12 @@ header {
 		padding: 1rem 1.5rem 1.5rem 1.5rem;
 		background: $greyGradient;
 		font-family: 'Roboto Slab', serif;
-		color: white;
+		color: $hWhite;
 
 		> div:nth-child(1) { font-size: 2.625rem; }
 		> div:nth-child(2) { flex: 1; font-size: 1.4375rem; white-space: normal; }
 		> div:nth-child(3) {
-			font-size: 0.875rem;
+			font-size: .875rem;
 			font: caption;
 			font-weight: 500;
 		}
@@ -169,10 +213,10 @@ header {
 	}
 	.bar {
 		z-index: 1;
-		background: white;
+		background: $hWhite;
 		width: 4rem;
-		padding: 0.5rem;
-		padding-left: calc(0.5rem + 0.5rem);
+		padding: .5rem;
+		padding-left: calc(.5rem + .5rem);
 		margin: .625rem 0 .625rem -.625rem;
 		display: flex;
 
@@ -192,8 +236,8 @@ header {
 				fill: $hBorderColor;
 			}
 		}
-		& > :nth-child(2) svg { transition-delay: 0.05s; }
-		& > :last-child svg { transition-delay: 0.1s; }
+		& > :nth-child(2) svg { transition-delay: .05s; }
+		& > :last-child svg { transition-delay: .1s; }
 	}
 
 	&:hover .button svg {
@@ -220,51 +264,35 @@ header {
 }
 
 .listMenu {
-	padding-top: 1.75rem;
-	min-width: 35rem;
+	width: 41rem;
+
+	.headline {
+		margin: 3rem 4rem 1.5rem 4rem;
+		display: flex;
+		min-height: 4rem;
+		justify-content: center;
+		align-items: center;
+
+		text-align: center;
+		&.flex {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			h1 {
+				margin-right: .5rem;
+			}
+		}
+	}
+
 	.dist {
-		margin-left: 2rem;
+		margin-left: 4rem;
+		margin-right: 4rem;
 	}
 	.spacer {
 		padding-bottom: 1.25rem;
 	}
-	.hAlign {
-		display: flex;
-    	align-items: center;
-    	h1 {
-    		margin-right: .75rem;
-    	}
-		.flexGrow {
-			flex: 1;
-		}
-		.iconButton {
-			margin-right: 1rem;
-		}
-	}
 	.iconButton svg {
 		fill: $hLightGrey;
-	}
-	h1 {
-		font-family: 'Roboto Slab', serif;
-		font-size: 2.75rem;
-		background: $greyGradient;
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		font-weight: 400;
-	}
-	h2 {
-		font-family: 'Roboto Slab', serif;
-		font-size: 1.5rem;
-		font-weight: 400;
-		.grey {
-			color: $hDarkGrey;
-		}
-	}
-	h3 {
-		font-size: 1.2rem;
-		color: $hBlack;
-		font-weight: 400;
-		margin-bottom: 0.625rem;
 	}
 
 	ul {
@@ -274,7 +302,7 @@ header {
 		li {
 			display: block;
 			color: $hDarkGrey;
-			margin: 0.6rem 0.9rem;
+			margin: .6rem .9rem;
 		}
 		div {
 			color: $hDarkGrey;
@@ -284,20 +312,31 @@ header {
 	}
 }
 
+.form {
+	margin-bottom: 1.5rem;
+	> * {
+		margin-bottom: .4rem;
+	}
+	h3, p {
+		margin-left: 0.75rem;
+		margin-bottom: .8rem;
+	}
+}
+
 .colorPreview {
 	border: $hBorder;
 	border-radius: 50%;
 }
 
 .textBox {
-	background-color: $hTextbox;
+	border-left: $hDarkBorder;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	margin-bottom: .8rem;
 
 	transition: border .2s;
-	border-left: 0 solid $hErrorRed;
+	// border-left: 0 solid $hErrorRed;
 	&.error {
 		border-left-width: .25rem;
 	}
@@ -309,11 +348,11 @@ header {
 		padding: .65rem 0 .65rem .75rem;
 
 		label, span {
-			font-size: 0.75rem;
+			font-size: .75rem;
 			color: #3f3f3f;
 		}
 		span {
-			padding-left: 0.3rem;
+			padding-left: .3rem;
 			color: $hErrorRed;
 		}
 		input {
@@ -333,12 +372,12 @@ header {
 				&::-webkit-slider-thumb {
 					-webkit-appearance: none;
 					margin-bottom: .1rem;
-					box-shadow: 0px 0.125rem 0.125rem rgba(0, 0, 0, 0.04);
+					box-shadow: 0px .125rem .125rem rgba(0, 0, 0, .04);
 					border: .08rem solid $hLightGrey;
 					border-radius: 50%;
 					width: 1rem;
 					height: 1rem;
-					background-color: white;
+					background-color: $hWhite;
 
 					&:active {
 						background-color: $hBorderColor;
@@ -375,11 +414,10 @@ header {
 }
 
 .itemList {
-	background-color: $hTextbox;
-	margin-bottom: .8rem;
-	padding: 0.3rem 0;
+	padding: .1rem 0;
+	border-left: $hDarkBorder;
 	.item {
-		margin: 0.6rem 0.9rem;
+		margin: .25rem .9rem;
 		input[type="checkbox"], input[type="radio"] {
 			zoom: 1.1;
 			margin-top: .1rem;
@@ -390,6 +428,71 @@ header {
 			display: flex;
 			font-size: .875rem;
 			align-items: center;
+		}
+		&:not(:first-child):not(:last-child) {
+			margin: .6rem .9rem;
+		}
+	}
+}
+
+hr {
+    border: 0;
+    height: 0;
+    border-top: $hBorder;
+    margin: 1.5rem 0;
+}
+
+.actionBar {
+	position: relative;
+	height: 2rem;
+	display: flex;
+	padding: 0 2rem;
+	margin: 1.5rem 0;
+
+	&::before {
+		content: '';
+		z-index: -1;
+		position: absolute;
+		border-top: $hBorder;
+		left: 0;
+		right: 0;
+		top: 50%;
+	}
+
+	.left {
+		display: flex;
+		flex: 1;
+		justify-content: flex-start;
+	}
+	.right {
+		display: flex;
+		flex: 1;
+		justify-content: flex-end;
+	}
+
+	.btn {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background-color: $hWhite;
+		border: $hBorder;
+		border-radius: 2rem;
+		min-width: 1.9rem;
+		&.l {
+			float: left;
+		}
+		&.r {
+			float: right;
+		}
+		span {
+			font-size: .75rem;
+			margin: 0 1rem;
+			color: $hBlack;
+			line-height: .9;
+		}
+		svg {
+			transform: scale(.65);
+			fill: $hBlack;
 		}
 	}
 }

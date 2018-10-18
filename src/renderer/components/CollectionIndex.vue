@@ -1,12 +1,13 @@
 <template>
 	<!-- TODO, loading animation -->
 	<div class="listMenu">
-		<div class="dist spacer hAlign">
+		<div class="headline flex">
 			<h1 :style="h1Style">{{collection.data?collection.data.title_short:'???'}}</h1>
 			<h2 class="flexGrow">{{collection.data?collection.data.title:'???'}}</h2>
-			<div @click="editCollection()"><div class="iconButton"><iconEdit /></div></div>
 		</div>
-		<hr class="spacer">
+		
+		<actionBar :actions="actionButtons" />
+
 		<div>
 			<div class="dist hAlign">
 				<h3 class="flexGrow">{{ $t('info.modules.main') }}</h3>
@@ -58,10 +59,14 @@
 
 <script>
 import Vue from 'vue'
+
+import actionBar from './elements/ActionBar'
+
 import Collection from '../classes/Collection'
 import Helpers from '../classes/Helpers'
 import { remote } from 'electron'
 
+import iconClose from '../assets/icons/outline-close-24px.svg'
 import iconEdit from '../assets/icons/outline-edit-24px.svg'
 import iconAdd from '../assets/icons/outline-add-24px.svg'
 
@@ -76,9 +81,21 @@ export default {
 	 * {array} data.callOnMount.args - method arguments
 	 */
 	data: function () {
+		let actionButtons = {
+			left: [{
+				icon: iconClose,
+				callback: () => this.sheet.closeSelf(this.sheet)
+			}],
+			right: [{
+				label: this.$t('action.edit._'),
+				callback: this.editCollection
+			}]
+		}
 		return {
 			collection: {},
 			loading: true,
+
+			actionButtons,
 
 			main_modules: [],
 			reusable_modules: [],
@@ -87,7 +104,7 @@ export default {
 	},
 	components: {
 		iconAdd,
-		iconEdit
+		actionBar
 	},
 	mounted: function() {
 		// 1. Loading Collection

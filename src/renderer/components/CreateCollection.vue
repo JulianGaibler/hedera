@@ -1,11 +1,13 @@
 <template>
 	<div class="bottombar">
 		<div class="listMenu">
-			<div class="dist spacer">
+			<div class="headline">
 				<h2 v-if="data" class="grey">{{ $t('action.edit.collection') }}</h2>
 				<h2 v-else class="grey">{{ $t('action.new.collection') }}</h2>
 			</div>
-			<hr class="spacer">
+			
+			<actionBar :actions="actionButtons" />
+
 			<div class="dist">
 				<formInput v-model="buttons.title.value" :config="buttons.title" />
 				<formInput v-model="buttons.title_short.value" :config="buttons.title_short" />
@@ -15,19 +17,18 @@
 				</formInput>
 			</div>
 		</div>
-		<div>
-			<div class="cornerBtn" @click="sheet.closeSelf(sheet)">{{ $t('action.cancel') }}</div>
-			<div v-if="data" class="cornerBtn" @click="_submit">{{ $t('action.change') }}</div>
-			<div v-else class="cornerBtn" @click="_submit">{{ $t('action.create') }}</div>
-		</div>
 	</div>
 </template>
 
 <script>
 import formInput from './elements/FormInput'
+import actionBar from './elements/ActionBar'
+
 import Helpers from '../classes/Helpers'
 import AppData from '../classes/AppData'
 import { remote } from 'electron'
+
+import iconClose from '../assets/icons/outline-close-24px.svg'
 
 export default {
 	name: 'createCollection',
@@ -40,6 +41,16 @@ export default {
 	 * {number} data.color
 	 */
 	data: function () {
+		let actionButtons = {
+			left: [{
+				icon: iconClose,
+				callback: () => this.sheet.closeSelf(this.sheet)
+			}],
+			right: [{
+				label: this.$t(this.data ? 'action.change' : 'action.create'),
+				callback: this._submit
+			}]
+		}
 		let buttons = {
 			title: {
 				value: this.data ? this.data.title : '',
@@ -77,9 +88,10 @@ export default {
 		return {
 			path: '/Users/Julian/Documents',
 			buttons,
+			actionButtons
 		}
 	},
-	components: { formInput },
+	components: { formInput, actionBar },
 	methods: {
 		/**
 		 * Look at Helper-Class

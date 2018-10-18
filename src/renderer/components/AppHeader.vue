@@ -1,7 +1,15 @@
 <template>
 	<header>
-		<div class="logo"><IconLogo /></div>
-		<div class="navigation"><div /></div>
+		<div class="darwin" />
+		<div class="menu">
+			<div class="container left" />
+			<div class="container center">
+				<div class="logo"><IconLogo /></div>
+			</div>
+			<div class="container right">
+				<span>TODO</span>
+			</div>
+		</div>
 	</header>
 </template>
 

@@ -1,51 +1,42 @@
 <template>
 	<div class="listMenu">
-		<div class="dist spacer">
+		<div class="headline">
 			<h2 class="grey">{{ $t('sections.settings') }}</h2>
 		</div>
-		<hr class="spacer">
-		<div class="dist">
-			<h3>Language</h3>
-			<formOptions v-model="va" :config="config" />
-			<p>{{va}}</p>
-			<h3>Default Directory</h3>
-			<formInput v-model="defaultDirectory" :config="buttons.directory" />
-		</div>
+
+		<actionBar :actions="actionButtons" />
+
+		<language />
+		<!-- <defaultDirectory /> -->
+
 	</div>
 </template>
 
 <script>
 import { remote } from 'electron'
 
-import formInput from './elements/FormInput'
+import actionBar from './elements/ActionBar'
+import language from './Settings/Language'
+
+import iconClose from '../assets/icons/outline-close-24px.svg'
 
 export default {
 	name: 'settings',
 	props: ['sheet'],
 	data: function () {
-		let buttons = {
-			directory: {
-				type: 'text',
-				placeholder: 'Absolute path of location',
-				button: {
-					src: require('../assets/icons/outline-folder_open-24px.svg'),
-					callback: this._setPath,
-				}
-			}
-		}
 
 		return {
-			buttons,
-			va: ['disable'],
-			config: {
-				type: 'checkbox',
-				options: [
-					{value: 'disable', label: 'use System default'}				]
+			actionButtons: {
+				left: [{
+					icon: iconClose,
+					callback: () => this.sheet.closeSelf(this.sheet)
+				}]
 			}
 		}
 	},
 	components: {
-		formInput
+		actionBar,
+		language
 	},
 	mounted: function() {
 
