@@ -1,17 +1,26 @@
 <template>
-	<div :class="['textBox', config.error?'error':'']">
-		<div>
-			<div><label>{{config.label}}</label><span v-if="config.error">{{config.error.info}}</span></div>
-			<input :value="value" @input="$emit('input', $event.target.value)" :type="config.type" :min="config.min" :max="config.max" :step="config.step" :placeholder="config.placeholder">
-		</div>
-		<div v-if="config.button">
-			<div @click="config.button.callback">
-				<component :is="config.button.src" />
+	<div :class="['textBox', config.error?'error':'', disabled?'disabled':'']">
+		<div class="horizontalFlex">
+			<label>{{config.label}}</label>
+			<input :value="value"
+				@input="$emit('input', $event.target.value)"
+				:type="config.type"
+				:disabled="disabled"
+				:min="config.min"
+				:max="config.max"
+				:step="config.step"
+				:placeholder="config.placeholder"
+			>
+			<div v-if="config.button" class="button">
+				<button :disabled="disabled" @click="config.button.callback">
+					<component :is="config.button.src" />
+				</button>
+			</div>
+			<div v-else-if="this.$slots.default">
+				<slot />
 			</div>
 		</div>
-		<div v-else-if="this.$slots.default">
-			<slot />
-		</div>
+		<div v-if="config.error">{{config.error.info}}</div>
 	</div>
 </template>
 
@@ -23,6 +32,8 @@ export default {
 	 * Data-Props
 	 * {string}  value - this will get propagated back to the parent
 	 *
+	 * {boolean} disabled - if disabled
+	 * 
 	 * {string}  config.label - Label of Input
 	 * {string}  config.type - type of input
 	 * {string} [config.placeholder] - text-placeholder
@@ -35,7 +46,7 @@ export default {
 	 * {string}  config.button.callback - function to be called when clicked
 	 * {svg}     config.button.src - svg-icon
 	 */
-	props: [ 'value', 'config' ],
+	props: [ 'value', 'config', 'disabled' ],
 	data () {
 		return {
 			

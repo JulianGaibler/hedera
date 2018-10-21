@@ -323,80 +323,102 @@ header {
 	}
 }
 
-.colorPreview {
-	border: $hBorder;
-	border-radius: 50%;
-}
-
 .textBox {
 	border-left: $hDarkBorder;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	margin-bottom: .8rem;
-
+	padding-left: 0.75rem;
 	transition: border .2s;
-	// border-left: 0 solid $hErrorRed;
+
 	&.error {
-		border-left-width: .25rem;
-	}
-
-	> div:nth-child(1) {
-		display: flex;
-		flex-direction: column;
-		flex: 1;
-		padding: .65rem 0 .65rem .75rem;
-
-		label, span {
-			font-size: .75rem;
-			color: #3f3f3f;
-		}
-		span {
-			padding-left: .3rem;
+		border-color: $hErrorRed;
+		> :last-child {
 			color: $hErrorRed;
+			font-size: 0.75rem;
+		}
+	}
+	.horizontalFlex {
+		display: flex;
+		label, input {
+			padding: .65rem 0;
+		}
+		> div:last-child {
+			flex: 0;
+			display: flex;
+			align-items: center;
+			margin-left: .5rem;
+		}
+		.button > button {
+			width: 1.8rem;
+			height: 1.8rem;
+			margin: 0;
+			padding: .4rem;
+			border-radius: 50%;
+			border: none;
+			&:active, &:focus {
+				outline: none;
+				background-color: #e6e6e6;
+			}
+			svg {
+				fill: $hBlack;
+			}
+		}
+		label {
+			color: #3f3f3f;
+			font-size: .875rem;
+			margin-right: .5rem;
 		}
 		input {
-			font-size: .875rem;
+			flex: 1;
 			&::placeholder {
 				opacity: .5;
 			}
-
 			&[type=range] {
 				-webkit-appearance: none;
-				
 				margin: .6rem 0;
-
-				border-top: .08rem solid $hLightGrey;
 				height: 1px;
+				position: relative;
+
+				&::before {
+					content: '';
+					z-index: -1;
+					position: absolute;
+					border-top: .08rem solid $hBlack;
+					left: 0;
+					right: 0;
+					top: 50%;
+				}
 
 				&::-webkit-slider-thumb {
 					-webkit-appearance: none;
 					margin-bottom: .1rem;
-					box-shadow: 0px .125rem .125rem rgba(0, 0, 0, .04);
-					border: .08rem solid $hLightGrey;
+					border: .08rem solid $hBlack;
 					border-radius: 50%;
 					width: 1rem;
 					height: 1rem;
 					background-color: $hWhite;
-
 					&:active {
 						background-color: $hBorderColor;
 					}
 				}
 			}
-
-
 		}
 	}
-	> div:nth-child(2) {
-		flex: 0;
-		padding: .65rem 1rem;
-		div {
-			width: 1.4375rem;
-			height: 1.4375rem;
-			svg { fill: $hDarkGrey }
+	&.disabled {
+		border-color: $hLightGrey;
+		label, input, div {
+			color: $hLightGrey;
+		}
+		.button button > svg {
+			fill: $hLightGrey
 		}
 	}
+}
+
+.colorPreview {
+	width: 1rem;
+	height: 1rem;
+	border: .0625rem solid $hBlack;
+	border-radius: 50%;
+	margin-right: .3rem;
 }
 
 .iconButton {
@@ -433,13 +455,19 @@ header {
 			margin: .6rem .9rem;
 		}
 	}
+	&.disabled {
+		border-color: $hLightGrey;
+		label, input, div {
+			color: $hLightGrey;
+		}
+	}
 }
 
 hr {
-    border: 0;
-    height: 0;
-    border-top: $hBorder;
-    margin: 1.5rem 0;
+	border: 0;
+	height: 0;
+	border-top: $hBorder;
+	margin: 1.5rem 0;
 }
 
 .actionBar {
