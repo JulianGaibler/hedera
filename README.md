@@ -21,6 +21,13 @@ Consider downloading an extension for your Editor
 npm run lint
 ```
 
+## Contributing Help
+
+### Icons
+All Icons come from [Material Design Icons](https://material.io/tools/icons/?style=outline) and use the outline-style.
+
+Please remove all width- and height-attributes from the svg files and ensure they have a viewBox-attribute when adding new ones.
+
 ## Commits
 
 Use [gitmoji](https://gitmoji.carloscuesta.me/) for all future commits
