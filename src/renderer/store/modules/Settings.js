@@ -47,6 +47,20 @@ const mutations = {
 	}
 }
 
+const getters = {
+	getField: state => field => {
+		if (state[field] !== 'default')
+			return state[field]
+
+		switch (field) {
+		case 'lang':
+			return electronApp.getLocale().split('-')[0]
+		case 'defaultDirectory':
+			return electronApp.getPath('documents')
+		}
+	}
+}
+
 const actions = {
 	updateDocument ({ commit, dispatch }, data) {
 		dispatch('findDocument', data.file).then( (result) => {
@@ -73,26 +87,17 @@ const actions = {
 	updateField ({ commit }, data) {
 		commit('updateField', data)
 	},
-	defaultField ({ commit }, data) {
-		commit('updateField', data)
+	toogleDefaultField ({ commit, getters }, {field, toDefault}) {
+		if (toDefault) commit('updateField', {field, value: 'default'})
+		else commit('updateField', {field, value: getters.getField(field)})
 	},
-	getField ({ state }, field) {
-		if (state[field] !== 'default')
-			return state[field]
-
-		switch (field) {
-		case 'lang':
-			return electronApp.getLocale().split('-')[0]
-		case 'defaultDirectory':
-			return electronApp.getPath('documents')
-		}
-	}
 }
 
 const _modules = {
 	namespaced: true,
 	state,
 	mutations,
+	getters,
 	actions,
 }
 const _plugins = [savePlugin]

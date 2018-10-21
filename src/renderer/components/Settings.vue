@@ -1,13 +1,13 @@
 <template>
 	<div class="listMenu">
 		<div class="headline">
-			<h2 class="grey">{{ $t('sections.settings') }}</h2>
+			<h2 class="grey">{{ $t('settings.title') }}</h2>
 		</div>
 
 		<actionBar :actions="actionButtons" />
 
 		<language />
-		<!-- <defaultDirectory /> -->
+		<defaultDirectory />
 
 	</div>
 </template>
@@ -17,6 +17,7 @@ import { remote } from 'electron'
 
 import actionBar from './elements/ActionBar'
 import language from './Settings/Language'
+import defaultDirectory from './Settings/DefaultDirectory'
 
 import iconClose from '../assets/icons/outline-close-24px.svg'
 
@@ -36,7 +37,8 @@ export default {
 	},
 	components: {
 		actionBar,
-		language
+		language,
+		defaultDirectory
 	},
 	mounted: function() {
 
