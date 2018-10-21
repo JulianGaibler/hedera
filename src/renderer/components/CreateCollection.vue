@@ -8,7 +8,7 @@
 			
 			<actionBar :actions="actionButtons" />
 
-			<div class="dist">
+			<div class="dist form">
 				<formInput v-model="buttons.title.value" :config="buttons.title" />
 				<formInput v-model="buttons.title_short.value" :config="buttons.title_short" />
 				<formInput v-if="!data" v-model="buttons.directory.value" :config="buttons.directory" />
@@ -56,13 +56,13 @@ export default {
 				value: this.data ? this.data.title : '',
 				type: 'text',
 				label: this.$t('label.title'),
-				placeholder: 'eg. Grundgesetz'
+				placeholder: this.$t('label.placeholder.title_example')
 			},
 			title_short: {
 				value: this.data ? this.data.title_short : '',
 				type: 'text',
 				label: this.$t('label.abbreviation'),
-				placeholder: 'eg. GG'
+				placeholder: this.$t('label.placeholder.abbreviation_example')
 			},
 			directory: {
 				value: '/Users/Julian/Documents/untitled.ivy',
@@ -80,8 +80,7 @@ export default {
 				min: 0,
 				max: 359,
 				step: 1,
-				label: this.$t('label.color'),
-				placeholder: '0 to 360'
+				label: this.$t('label.color')
 			},
 		}
 
@@ -121,31 +120,31 @@ export default {
 		_submit: function() {
 			let valid = true
 
-			//Title
+			// title
 			let title = this.buttons.title.value.replace(/^\s+|\s+$/g, '')
 			if (title.length < 1) {
-				this.$set(this.buttons.title, 'error', {info: 'You have to give a title'})
+				this.$set(this.buttons.title, 'error', {info: this.$t('error.title_required')})
 				valid = false
 			}
 			else if ((Helpers.titleRegex()).test(title)) {
-				this.$set(this.buttons.title, 'error', {info: 'Only letters, numbers, hyphens allowed'})
+				this.$set(this.buttons.title, 'error', {info: this.$t('error.only_letters_numbers_hyphens')})
 				valid = false
 			}
 			else this.$set(this.buttons.title, 'error', undefined)
 
-			//title_short
+			// title_short
 			let title_short = this.buttons.title_short.value.replace(/^\s+|\s+$/g, '')
 			if (title_short.length < 1) {
-				this.$set(this.buttons.title_short, 'error', {info: 'You have to give a Abbreviation'})
+				this.$set(this.buttons.title_short, 'error', {info: this.$t('error.abbreviation_required')})
 				valid = false
 			}
 			else if ((/[^a-zA-Z0-9\- ]/g).test(title_short)) {
-				this.$set(this.buttons.title_short, 'error', {info: 'Only letters, numbers, hyphens and white-space allowed'})
+				this.$set(this.buttons.title_short, 'error', {info: this.$t('error.only_letters_numbers_hyphens_whitespace')})
 				valid = false
 			}
 			else this.$set(this.buttons.title_short, 'error', undefined)
 
-			//Location
+			// location
 			let file
 			if (!this.data) {
 				file = this.buttons.directory.value.replace(/^\s+|\s+$/g, '')
@@ -154,10 +153,10 @@ export default {
 				file = `${file.substring(0, idx)}/${file.substring(idx+1)}.ivy`
 			}
 
-			//Color
+			// color
 			let color = parseInt(this.buttons.color.value)
 			if (isNaN(color)) {
-				this.$set(this.buttons.color, 'error', {info: 'Color is not a number'})
+				this.$set(this.buttons.color, 'error', {info: this.$t('error.unknown_error')})
 				valid = false
 			}
 			else this.$set(this.buttons.color, 'error', undefined)

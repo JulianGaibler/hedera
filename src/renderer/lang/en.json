@@ -28,14 +28,24 @@
 			"reuseable": "Reuseable Terms"
 		}
 	},
-	"sections": {
-		"settings": "Settings"
+	"settings": {
+		"title": "Settings",
+		"use_system_default": "Use System Default",
+		"language": "Language",
+		"language_desc": "This action requires an Application restart.",
+		"defaultdirectory": "Default Directory",
+		"defaultdirectory_desc": "Location where new collection will be created."
 	},
 	"label": {
 		"title": "Title",
 		"abbreviation": "Abbreviation",
 		"location": "Location",
-		"color": "Color"
+		"color": "Color",
+		"placeholder": {
+			"absolute_path": "Absolute path of location",
+			"title_example": "eg. StGB",
+			"abbreviation_example": "eg. Strafgesetzbuch"
+		}
 	},
 	"state": {
 		"untitled": "untitled"
@@ -48,7 +58,12 @@
 	},
 	"error": {
 		"file_already_exists": "File already exists",
+		"path_invalid": "This path is invalid",
 		"read_only_directory": "Could not create file at this location",
-		"unknown_error": "An unknown error occured"
+		"unknown_error": "An unknown error occured",
+		"title_required": "You have to give a Title",
+		"abbreviation_required": "You have to give a Abbreviation",
+		"only_letters_numbers_hyphens": "Only letters, numbers, hyphens allowed",
+		"only_letters_numbers_hyphens_whitespace": "Only letters, numbers, hyphens and white-space allowed"
 	}
 }
