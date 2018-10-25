@@ -54,7 +54,7 @@ export default {
 		open: function(path) {
 			if (this._exists(path))
 				if (!this._alreadyOpen(path))
-					this.sheet.spawnChild(this.sheet, 'collectionIndex', { path })
+					this.sheet.spawnChild(this.sheet, 'collection', { path })
 		},
 		/**
 		 * Opens Collection and calls editCollection
@@ -67,7 +67,7 @@ export default {
 				if (nextSheet) {
 					nextSheet.editCollection()
 				} else {
-					this.sheet.spawnChild(this.sheet, 'collectionIndex', {
+					this.sheet.spawnChild(this.sheet, 'collection', {
 						path,
 						callOnMount: [{ name: 'editCollection',args: [] }]
 					})

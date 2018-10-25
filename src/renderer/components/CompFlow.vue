@@ -21,7 +21,7 @@ import VueScrollTo from 'vue-scrollto'
 import horizontalAnim from './elements/HorizontalAnim'
 import perfectChild from './PerfectChild'
 import collectionOverview from './CollectionOverview'
-import collectionIndex from './CollectionIndex'
+import collection from './Collection'
 import createCollection from './CreateCollection'
 import settings from './Settings'
 import termEditor from './TermEditor'
@@ -34,7 +34,7 @@ export default {
 		perfectChild,
 		collectionOverview,
 		createCollection,
-		collectionIndex,
+		collection,
 		settings,
 		termEditor
 	},

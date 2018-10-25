@@ -8,52 +8,7 @@
 		
 		<actionBar :actions="actionButtons" />
 
-		<div>
-			<div class="dist hAlign">
-				<h3 class="flexGrow">{{ $t('info.modules.main') }}</h3>
-				<div @click="collection.createModule(1)"><div class="iconButton"><iconAdd /></div></div>
-			</div>
-			<ul>
-				<li v-for="obj in main_modules"
-					:key="obj._id"
-				>
-					{{obj.title ? obj.title : $t('state.untitled')}}
-				</li>
-				<div v-if="main_modules.length < 1">
-					{{$t('warning.empty.modules')}}
-				</div>
-			</ul>
-			<div class="dist hAlign">
-				<h3 class="flexGrow">{{ $t('info.modules.reuseable') }}</h3>
-				<div @click="collection.createModule(2)"><div class="iconButton"><iconAdd /></div></div>
-			</div>
-			<ul>
-				<li v-for="obj in reusable_modules"
-					:key="obj._id"
-				>
-					{{obj.title ? obj.title : $t('state.untitled')}}
-				</li>
-				<div v-if="reusable_modules.length < 1">
-					{{$t('warning.empty.modules')}}
-				</div>
-			</ul>
-			<div class="dist hAlign">
-				<h3 class="flexGrow">{{ $t('info.terms.reuseable') }}</h3>
-				<div @click="collection.createTerm()"><div class="iconButton"><iconAdd /></div></div>
-			</div>
-			<ul>
-				<li v-for="obj in reuseable_terms"
-					:key="obj._id"
-					@click="_openTerm(obj._id)"
-				>
-					{{obj.title ? obj.title : $t('state.untitled')}}
-				</li>
-
-				<div v-if="reuseable_terms.length < 1">
-					{{$t('warning.empty.terms')}}
-				</div>
-			</ul>
-		</div>
+		<items v-if="!loading" :collection="collection" />
 	</div>
 </template>
 
@@ -61,17 +16,17 @@
 import Vue from 'vue'
 
 import actionBar from './elements/ActionBar'
+import items from './Collection/Items'
 
 import Collection from '../classes/Collection'
 import Helpers from '../classes/Helpers'
 import { remote } from 'electron'
 
 import iconClose from '../assets/icons/outline-close-24px.svg'
-import iconEdit from '../assets/icons/outline-edit-24px.svg'
 import iconAdd from '../assets/icons/outline-add-24px.svg'
 
 export default {
-	name: 'collectionIndex',
+	name: 'collection',
 	props: ['sheet', 'data'],
 	/**
 	 * Data-Prop
@@ -96,15 +51,12 @@ export default {
 			loading: true,
 
 			actionButtons,
-
-			main_modules: [],
-			reusable_modules: [],
-			reuseable_terms: [],
 		}
 	},
 	components: {
 		iconAdd,
-		actionBar
+		actionBar,
+		items
 	},
 	mounted: function() {
 		// 1. Loading Collection
@@ -114,18 +66,6 @@ export default {
 		this.collection.init().then(() => {
 			// 3. Updating stats in Collection-Overview
 			this._updateInfo()
-
-			// 4. Fetching existing modules
-			this.updateModules()
-			this.updateTerms()
-
-			// 5. subscribing to changes in db
-			this.collection.events.subscribe('modules', (changes) => {
-				this.updateModules(changes)
-			})
-			this.collection.events.subscribe('terms', (changes) => {
-				this.updateTerms(changes)
-			})
 
 			// 6. We're done with the setup
 			this.loading = false
@@ -151,11 +91,6 @@ export default {
 		 * Look at Helper-Class
 		 */
 		getColor: hue => Helpers.getCssGradient(hue),
-		/**
-		 * Opens 'create-collection'-sheet as child
-		 */
-		_openTerm: function(_id) {
-		},
 		/**
 		 * Opens 'create-collection'-sheet as child
 		 */
@@ -192,20 +127,6 @@ export default {
 				}
 			}
 			this.$store.dispatch('Settings/updateDocument', info)
-		},
-		updateModules: function() {
-			this.collection.db.modules.where('dependency_type').equals(1).toArray().then(array => {
-				this.main_modules = array
-			})
-			this.collection.db.modules.where('dependency_type').equals(2).toArray().then(array => {
-				this.reusable_modules = array
-			})
-
-		},
-		updateTerms: function() {
-			this.collection.db.terms.toArray().then(array => {
-				this.reuseable_terms = array
-			})
 		},
 	},
 	computed: {
