@@ -65,7 +65,7 @@ export default {
 				placeholder: this.$t('label.placeholder.abbreviation_example')
 			},
 			directory: {
-				value: '/Users/Julian/Documents/untitled.ivy',
+				value: '',
 				type: 'text',
 				label: this.$t('label.location'),
 				placeholder: 'Absolute path of location',
@@ -85,12 +85,15 @@ export default {
 		}
 
 		return {
-			path: '/Users/Julian/Documents',
+			path: this.intermediaryValue = this.$store.getters['Settings/getField']('defaultDirectory'),
 			buttons,
 			actionButtons
 		}
 	},
 	components: { formInput, actionBar },
+	created: function() {
+		this._updatePathInput()
+	},
 	methods: {
 		/**
 		 * Look at Helper-Class
@@ -111,7 +114,7 @@ export default {
 		 */
 		_updatePathInput: function() {
 			let a = this.buttons.title_short.value.replace(/[^a-zA-Z-]/g, '')
-			let filename = (a!=='') ? a : 'untitled'
+			let filename = (a!=='') ? a : this.$t('state.untitled')
 			this.buttons.directory.value = `${this.path}/${filename}.ivy`
 		},
 		/**
