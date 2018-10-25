@@ -74,7 +74,11 @@ export default {
 				Jetpack.existsAsync(value).then(result => {
 					if (result === 'dir') {
 						this.$set(this.defaultDirectory, 'error', undefined)
-						this.$store.dispatch('Settings/updateField', {field: 'defaultDirectory', value})
+						this.$store.dispatch('Settings/updateField', 
+							{
+								field: 'defaultDirectory',
+								value: value.replace(/^(.+?)\/*?$/, '$1')
+							})
 					}
 					else {
 						this.$set(this.defaultDirectory, 'error', {info: this.$t('error.path_invalid')})
