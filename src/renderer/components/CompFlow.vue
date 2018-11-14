@@ -60,7 +60,7 @@ export default {
 	mounted: function () {
 		this._spawnNext('collection-overview', {})
 		//this._spawnNext('collection', { path:'/Users/Julian/Documents/StGB.ivy' })
-		//this._spawnNext('settings')
+		this._spawnNext('settings')
 	},
 	methods: {
 		/**

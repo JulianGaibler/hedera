@@ -1,7 +1,7 @@
 <template>
 	<div :class="['textBox', config.error?'error':'', disabled?'disabled':'']">
 		<div class="horizontalFlex">
-			<label>{{config.label}}</label>
+			<label v-if="config.label">{{config.label}}</label>
 			<input :value="value"
 				@input="$emit('input', $event.target.value)"
 				:type="config.type"

@@ -1,49 +1,57 @@
 <template>
 	<div>
-		<div class="dist hAlign">
-			<h3 class="flexGrow">{{ $t('info.modules.main') }}</h3>
-			<div @click="collection.createModule(1)"><div class="iconButton"><iconAdd /></div></div>
-		</div>
-		<ul>
-			<li v-for="obj in main_modules"
-				:key="obj._id"
-			>
-				{{obj.title ? obj.title : $t('state.untitled')}}
-			</li>
-			<div v-if="main_modules.length < 1">
-				{{$t('warning.empty.modules')}}
+		<div class="dist form">
+			<div class="hflex">
+				<h3 class="grow">{{ $t('info.modules.main') }}</h3>
+				<div @click="collection.createModule(1)"><div class="iconButton"><iconAdd /></div></div>
 			</div>
-		</ul>
-		<div class="dist hAlign">
-			<h3 class="flexGrow">{{ $t('info.modules.reuseable') }}</h3>
-			<div @click="collection.createModule(2)"><div class="iconButton"><iconAdd /></div></div>
+			<ul>
+				<li v-for="obj in main_modules"
+					:key="obj._id"
+				>
+					{{obj.title ? obj.title : $t('state.untitled')}}
+				</li>
+				<div v-if="main_modules.length < 1">
+					{{$t('warning.empty.modules')}}
+				</div>
+			</ul>
 		</div>
-		<ul>
-			<li v-for="obj in reusable_modules"
-				:key="obj._id"
-			>
-				{{obj.title ? obj.title : $t('state.untitled')}}
-			</li>
-			<div v-if="reusable_modules.length < 1">
-				{{$t('warning.empty.modules')}}
+
+		<div class="dist form">
+			<div class="hflex">
+				<h3 class="grow">{{ $t('info.modules.reuseable') }}</h3>
+				<div @click="collection.createModule(2)"><div class="iconButton"><iconAdd /></div></div>
 			</div>
-		</ul>
-		<div class="dist hAlign">
-			<h3 class="flexGrow">{{ $t('info.terms.reuseable') }}</h3>
-			<div @click="collection.createTerm()"><div class="iconButton"><iconAdd /></div></div>
+			<ul>
+				<li v-for="obj in reusable_modules"
+					:key="obj._id"
+				>
+					{{obj.title ? obj.title : $t('state.untitled')}}
+				</li>
+				<div v-if="reusable_modules.length < 1">
+					{{$t('warning.empty.modules')}}
+				</div>
+			</ul>
 		</div>
-		<ul>
-			<li v-for="obj in reuseable_terms"
-				:key="obj._id"
-				@click="_openTerm(obj._id)"
-			>
-				{{obj.title ? obj.title : $t('state.untitled')}}
-			</li>
-	
-			<div v-if="reuseable_terms.length < 1">
-				{{$t('warning.empty.terms')}}
+
+		<div class="dist form">
+			<div class="hflex">
+				<h3 class="grow">{{ $t('info.terms.reuseable') }}</h3>
+				<div @click="collection.createTerm()"><div class="iconButton"><iconAdd /></div></div>
 			</div>
-		</ul>
+			<ul>
+				<li v-for="obj in reuseable_terms"
+					:key="obj._id"
+					@click="_openTerm(obj._id)"
+				>
+					{{obj.title ? obj.title : $t('state.untitled')}}
+				</li>
+		
+				<div v-if="reuseable_terms.length < 1">
+					{{$t('warning.empty.terms')}}
+				</div>
+			</ul>
+		</div>
 	</div>
 </template>
 
