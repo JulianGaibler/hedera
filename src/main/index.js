@@ -1,5 +1,5 @@
 import { app, BrowserWindow } from 'electron'
-//import './NativeMenu'
+import './NativeMenu'
 
 /**
  * Set `__static` path to static files in production
