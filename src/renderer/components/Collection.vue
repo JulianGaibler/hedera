@@ -6,7 +6,11 @@
 			<h2 class="flexGrow">{{collection.data?collection.data.title:'???'}}</h2>
 		</div>
 		
-		<actionBar :actions="actionButtons" />
+		<actionBar :actions="config.actionButtons" />
+
+		<div class="dist form">
+			<formInput v-model="searchQuery" :config="config.searchInput" />
+		</div>
 
 		<items v-if="!loading" :collection="collection" />
 	</div>
@@ -17,6 +21,7 @@ import Vue from 'vue'
 
 import actionBar from './elements/ActionBar'
 import items from './Collection/Items'
+import formInput from './elements/FormInput'
 
 import Collection from '../classes/Collection'
 import Helpers from '../classes/Helpers'
@@ -46,17 +51,27 @@ export default {
 				callback: this.editCollection
 			}]
 		}
+		let searchInput = {
+			type: 'text',
+			placeholder: this.$t('label.search')+'...',
+		}
 		return {
 			collection: {},
 			loading: true,
+			config: {
+				actionButtons,
+				searchInput
 
-			actionButtons,
+			},
+
+			searchQuery: '',
 		}
 	},
 	components: {
 		iconAdd,
 		actionBar,
-		items
+		formInput,
+		items,
 	},
 	mounted: function() {
 		// 1. Loading Collection

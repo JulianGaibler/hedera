@@ -41,6 +41,7 @@
 		"abbreviation": "Abbreviation",
 		"location": "Location",
 		"color": "Color",
+		"search": "Search",
 		"placeholder": {
 			"absolute_path": "Absolute path of location",
 			"title_example": "eg. StGB",
