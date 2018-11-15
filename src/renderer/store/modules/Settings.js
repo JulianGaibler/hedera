@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import AppData from '../../classes/AppData'
 import { app, remote } from 'electron'
 
@@ -37,7 +38,7 @@ const mutations = {
 		state.recentDocuments.push(payload)
 	},
 	updateDocument: (state, payload) => {
-		state.recentDocuments[payload.index] = payload.data
+		Vue.set(state.recentDocuments, payload.index, payload.data)
 	},
 	removeDocument: (state, index) => {
 		state.recentDocuments.splice(index,1)

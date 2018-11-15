@@ -76,6 +76,7 @@ export default {
 	mounted: function() {
 		// 1. Loading Collection
 		Vue.set(this, 'collection', new Collection(this.data.path, this.$menubar))
+		Vue.set(this.collection, 'data', this.collection.data)
 		
 		// 2. Loading collection file and setting up database
 		this.collection.init().then(() => {
@@ -123,6 +124,7 @@ export default {
 			this.collection.data.title = title
 			this.collection.data.title_short = title_short
 			this.collection.data.color = color
+
 			this._updateInfo()
 			this.sheet.closeChild(this.sheet)
 		},
@@ -147,7 +149,7 @@ export default {
 	computed: {
 		h1Style: function() {
 			if (this.collection.data) return {
-				background: this.getColor(parseInt(this.collection.data.color)),
+				'background-image': this.getColor(parseInt(this.collection.data.color)),
 				'-webkit-background-clip': 'text',
 				'-webkit-text-fill-color': 'transparent'
 			}
