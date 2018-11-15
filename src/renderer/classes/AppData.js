@@ -70,17 +70,19 @@ export default class AppData {
 	 *
 	 * @param {string} file - full path to file
 	 * @param {string} data - data to be saved
-	 * @returns {number} see createCollection()
+	 * @returns {Promise} see createCollection()
 	 */
 	static saveCollection(file, data) {
-		try {
-			const yData = Yaml.safeDump(data, { condenseFlow: true, noCompatMode: true, lineWidth: 200 })
-			Jetpack.write(file, yData)
-		} catch(e) {
-			if (e.syscall !== undefined) return 2
-			return 3
-		}
-		return 0
+		return new Promise((resolve, reject) => {
+			try {
+				const yData = Yaml.safeDump(data, { condenseFlow: true, noCompatMode: true, lineWidth: 200 })
+				Jetpack.write(file, yData)
+				resolve(0)
+			} catch(e) {
+				if (e.syscall !== undefined) reject(2)
+				reject(3)
+			}
+		})
 	}
 
 	/**

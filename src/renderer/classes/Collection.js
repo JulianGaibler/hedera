@@ -1,5 +1,4 @@
 import Dexie from 'dexie'
-import Vue from 'vue'
 import {shell} from 'electron'
 import AppData from './AppData'
 import Helpers from './Helpers'
@@ -71,8 +70,7 @@ export default class Collection {
 	 * Saves collection to file
 	 */
 	save() {
-		//TODO filter
-		AppData.saveCollection(this.path, this.data)
+		return this.db2data().then(()=>AppData.saveCollection(this.path, this.data))
 	}
 
 	/**
@@ -80,7 +78,7 @@ export default class Collection {
 	 * when you don't need the collection anymore
 	 */
 	close() {
-		this.db.close()
+		this.save().then(()=>this.db.close())
 		if (this.menubar) {
 			this.menubar.unsubscribe('undo', this.undo)
 			this.menubar.unsubscribe('redo', this.redo)
@@ -91,14 +89,28 @@ export default class Collection {
 	 * Exports tables from db to this.data
 	 */
 	db2data() {
-		this.db.transaction('r', this.db.tables, ()=>{
-			return Promise.all(
-				this.db.tables.map(table => table.toArray()
-					.then(rows => ({table: table.name, rows: rows}))))
-		}).then(result => {
-			for (var i = result.length - 1; i >= 0; i--) {
-				this.data[result[i].table] = result[i].rows
-			}
+		return new Promise((resolve, reject) => {
+
+			this.db.transaction('r', this.db.tables, async () => {
+				let tables = this.db.tables
+				let accumulator = []
+				for (var i = tables.length - 1; i >= 0; i--) {
+					// Filter all tables starting with _
+					if (tables[i].name.startsWith('_')) {continue}
+					// convert table into array
+					const rows = await tables[i].toArray()
+					accumulator.push({table: tables[i].name, rows: rows})
+				}
+				return Promise.all(accumulator)
+
+			}).then(result => {
+				for (var i = result.length - 1; i >= 0; i--) {
+					this.data[result[i].table] = result[i].rows
+				}
+				resolve()
+			}).catch(e => reject(e))
+
+
 		})
 	}
 

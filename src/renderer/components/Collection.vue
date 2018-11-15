@@ -81,7 +81,7 @@ export default {
 		// 2. Loading collection file and setting up database
 		this.collection.init().then(() => {
 			// 3. Updating stats in Collection-Overview
-			this._updateInfo()
+			this._updateInfo(false)
 
 			// 6. We're done with the setup
 			this.loading = false
@@ -130,9 +130,10 @@ export default {
 		},
 		/**
 		 * Updates Shortcut-Info in Vuex-Store and saves changes to file
+		 * @param  {Boolean} [triggerSave=true] - If updated changes should be saved to the file
 		 */
-		_updateInfo: function() {
-			this.collection.save()
+		_updateInfo: function(triggerSave=true) {
+			if (triggerSave) this.collection.save()
 			let info = {
 				title: this.collection.data.title,
 				title_short: this.collection.data.title_short,
