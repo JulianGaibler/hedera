@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import formOptions from '../elements/FormOptions'
+import formOptions from '../../elements/FormOptions'
 
 export default {
 	name: 'language',

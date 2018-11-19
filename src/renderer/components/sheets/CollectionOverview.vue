@@ -27,13 +27,13 @@
 
 <script>
 import { mapState } from 'vuex'
-import Helpers from '../classes/Helpers'
-import AppData from '../classes/AppData'
+import Helpers from '../../classes/Helpers'
+import AppData from '../../classes/AppData'
 import { shell } from 'electron'
 
-import IconEdit from '../assets/icons/outline-edit-24px.svg'
-import IconOpen from '../assets/icons/outline-folder_open-24px.svg'
-import IconDelete from '../assets/icons/outline-delete-24px.svg'
+import IconEdit from '../../assets/icons/outline-edit-24px.svg'
+import IconOpen from '../../assets/icons/outline-folder_open-24px.svg'
+import IconDelete from '../../assets/icons/outline-delete-24px.svg'
 
 export default {
 	name: 'collectionOverview',

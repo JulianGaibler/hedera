@@ -17,11 +17,13 @@ window.ELECTRON_DISABLE_SECURITY_WARNINGS = true
 // }
 
 // Keeping the database clean
-Dexie.getDatabaseNames((dbs) => {
-	for (var i = dbs.length - 1; i >= 0; i--) {
-		Dexie.delete(dbs[i])
-	}
-})
+if (process.env.NODE_ENV !== 'development') {
+	Dexie.getDatabaseNames((dbs) => {
+		for (var i = dbs.length - 1; i >= 0; i--) {
+			Dexie.delete(dbs[i])
+		}
+	})
+}
 
 Vue.prototype.$menubar = new MenuHandler()
 

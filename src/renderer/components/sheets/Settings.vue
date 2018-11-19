@@ -4,7 +4,7 @@
 			<h2 class="grey">{{ $t('settings.title') }}</h2>
 		</div>
 
-		<actionBar :actions="actionButtons" />
+		<buttons :actions="actionButtons" />
 
 		<language />
 		<defaultDirectory />
@@ -15,11 +15,11 @@
 <script>
 import { remote } from 'electron'
 
-import actionBar from './elements/ActionBar'
+import Buttons from '../elements/Buttons'
 import language from './Settings/Language'
 import defaultDirectory from './Settings/DefaultDirectory'
 
-import iconClose from '../assets/icons/outline-close-24px.svg'
+import iconClose from '../../assets/icons/outline-close-24px.svg'
 
 export default {
 	name: 'settings',
@@ -36,7 +36,7 @@ export default {
 		}
 	},
 	components: {
-		actionBar,
+		Buttons,
 		language,
 		defaultDirectory
 	},

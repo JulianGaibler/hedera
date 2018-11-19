@@ -6,14 +6,14 @@
 				<h2 v-else class="grey">{{ $t('action.new.collection') }}</h2>
 			</div>
 			
-			<actionBar :actions="actionButtons" />
+			<buttons class="actionBar" :actions="actionButtons" />
 
 			<div class="dist form">
-				<formInput v-model="buttons.title.value" :config="buttons.title" />
-				<formInput v-model="buttons.title_short.value" :config="buttons.title_short" />
-				<formInput v-if="!data" v-model="buttons.directory.value" :config="buttons.directory" />
-				<formInput v-model="buttons.color.value" :config="buttons.color">
-					<div class="colorPreview" :style="{background: _getColor(parseInt(buttons.color.value))}" />
+				<formInput v-model="formButtons.title.value" :config="formButtons.title" />
+				<formInput v-model="formButtons.title_short.value" :config="formButtons.title_short" />
+				<formInput v-if="!data" v-model="formButtons.directory.value" :config="formButtons.directory" />
+				<formInput v-model="formButtons.color.value" :config="formButtons.color">
+					<div class="colorPreview" :style="{background: _getColor(parseInt(formButtons.color.value))}" />
 				</formInput>
 			</div>
 		</div>
@@ -21,14 +21,15 @@
 </template>
 
 <script>
-import formInput from './elements/FormInput'
-import actionBar from './elements/ActionBar'
-
-import Helpers from '../classes/Helpers'
-import AppData from '../classes/AppData'
 import { remote } from 'electron'
 
-import iconClose from '../assets/icons/outline-close-24px.svg'
+import formInput from '../elements/FormInput'
+import Buttons from '../elements/Buttons'
+
+import Helpers from '../../classes/Helpers'
+import AppData from '../../classes/AppData'
+
+import iconClose from '../../assets/icons/outline-close-24px.svg'
 
 export default {
 	name: 'createCollection',
@@ -51,7 +52,7 @@ export default {
 				callback: this._submit
 			}]
 		}
-		let buttons = {
+		let formButtons = {
 			title: {
 				value: this.data ? this.data.title : '',
 				type: 'text',
@@ -70,7 +71,7 @@ export default {
 				label: this.$t('label.location'),
 				placeholder: 'Absolute path of location',
 				button: {
-					src: require('../assets/icons/outline-folder_open-24px.svg'),
+					src: require('../../assets/icons/outline-folder_open-24px.svg'),
 					callback: this._setPath,
 				}
 			},
@@ -86,11 +87,11 @@ export default {
 
 		return {
 			path: this.intermediaryValue = this.$store.getters['Settings/getField']('defaultDirectory'),
-			buttons,
+			formButtons,
 			actionButtons
 		}
 	},
-	components: { formInput, actionBar },
+	components: { formInput, Buttons },
 	created: function() {
 		this._updatePathInput()
 	},
@@ -113,9 +114,9 @@ export default {
 		 * Concats path with file-name and updates input-field
 		 */
 		_updatePathInput: function() {
-			let a = this.buttons.title_short.value.replace(/[^a-zA-Z-]/g, '')
+			let a = this.formButtons.title_short.value.replace(/[^a-zA-Z-]/g, '')
 			let filename = (a!=='') ? a : this.$t('state.untitled')
-			this.buttons.directory.value = `${this.path}/${filename}.ivy`
+			this.formButtons.directory.value = `${this.path}/${filename}.ivy`
 		},
 		/**
 		 * Checks if values of inputs are valid and creates/edits collection
@@ -124,45 +125,45 @@ export default {
 			let valid = true
 
 			// title
-			let title = this.buttons.title.value.replace(/^\s+|\s+$/g, '')
+			let title = this.formButtons.title.value.replace(/^\s+|\s+$/g, '')
 			if (title.length < 1) {
-				this.$set(this.buttons.title, 'error', {info: this.$t('error.title_required')})
+				this.$set(this.formButtons.title, 'error', {info: this.$t('error.title_required')})
 				valid = false
 			}
 			else if ((Helpers.titleRegex()).test(title)) {
-				this.$set(this.buttons.title, 'error', {info: this.$t('error.only_letters_numbers_hyphens')})
+				this.$set(this.formButtons.title, 'error', {info: this.$t('error.only_letters_numbers_hyphens')})
 				valid = false
 			}
-			else this.$set(this.buttons.title, 'error', undefined)
+			else this.$set(this.formButtons.title, 'error', undefined)
 
 			// title_short
-			let title_short = this.buttons.title_short.value.replace(/^\s+|\s+$/g, '')
+			let title_short = this.formButtons.title_short.value.replace(/^\s+|\s+$/g, '')
 			if (title_short.length < 1) {
-				this.$set(this.buttons.title_short, 'error', {info: this.$t('error.abbreviation_required')})
+				this.$set(this.formButtons.title_short, 'error', {info: this.$t('error.abbreviation_required')})
 				valid = false
 			}
 			else if ((/[^a-zA-Z0-9\- ]/g).test(title_short)) {
-				this.$set(this.buttons.title_short, 'error', {info: this.$t('error.only_letters_numbers_hyphens_whitespace')})
+				this.$set(this.formButtons.title_short, 'error', {info: this.$t('error.only_letters_numbers_hyphens_whitespace')})
 				valid = false
 			}
-			else this.$set(this.buttons.title_short, 'error', undefined)
+			else this.$set(this.formButtons.title_short, 'error', undefined)
 
 			// location
 			let file
 			if (!this.data) {
-				file = this.buttons.directory.value.replace(/^\s+|\s+$/g, '')
+				file = this.formButtons.directory.value.replace(/^\s+|\s+$/g, '')
 				file = file.replace(/(.*)\.(.*?)$/, '$1')
 				let idx = file.lastIndexOf('/')
 				file = `${file.substring(0, idx)}/${file.substring(idx+1)}.ivy`
 			}
 
 			// color
-			let color = parseInt(this.buttons.color.value)
+			let color = parseInt(this.formButtons.color.value)
 			if (isNaN(color)) {
-				this.$set(this.buttons.color, 'error', {info: this.$t('error.unknown_error')})
+				this.$set(this.formButtons.color, 'error', {info: this.$t('error.unknown_error')})
 				valid = false
 			}
-			else this.$set(this.buttons.color, 'error', undefined)
+			else this.$set(this.formButtons.color, 'error', undefined)
 
 			if (valid && !this.data) {
 				let saved = AppData.createCollection({title, title_short, file, color})
@@ -171,9 +172,9 @@ export default {
 					this.sheet.get(0).open(file)
 				}
 				else {
-					if (saved === 1) this.$set(this.buttons.directory, 'error', {info: this.$t('error.file_already_exists')})
-					if (saved === 2) this.$set(this.buttons.directory, 'error', {info: this.$t('error.read_only_directory')})
-					else this.$set(this.buttons.directory, 'error', {info: this.$t('error.unknown_error')})
+					if (saved === 1) this.$set(this.formButtons.directory, 'error', {info: this.$t('error.file_already_exists')})
+					if (saved === 2) this.$set(this.formButtons.directory, 'error', {info: this.$t('error.read_only_directory')})
+					else this.$set(this.formButtons.directory, 'error', {info: this.$t('error.unknown_error')})
 				}
 			} else if (valid && this.data) {
 				this.sheet.get(this.sheet.nr-1)._editCollection(title, title_short, color)
@@ -182,7 +183,7 @@ export default {
 		},
 	},
 	watch: {
-		'buttons.title_short.value': function() {
+		'formButtons.title_short.value': function() {
 			this._updatePathInput()
 		}
 	},

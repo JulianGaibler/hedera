@@ -19,12 +19,12 @@ import Vue from 'vue'
 import VueScrollTo from 'vue-scrollto'
 
 import horizontalAnim from './elements/HorizontalAnim'
-import perfectChild from './PerfectChild'
-import collectionOverview from './CollectionOverview'
-import collection from './Collection'
-import createCollection from './CreateCollection'
-import settings from './Settings'
-import termEditor from './TermEditor'
+import Modal from './elements/Modal'
+import perfectChild from './sheets/PerfectChild'
+import collectionOverview from './sheets/CollectionOverview'
+import collection from './sheets/Collection'
+import createCollection from './sheets/CreateCollection'
+import settings from './sheets/Settings'
 
 export default {
 	name: 'compFlow',
@@ -36,7 +36,6 @@ export default {
 		createCollection,
 		collection,
 		settings,
-		termEditor
 	},
 	data: function () {
 		// Settings for Vue-ScrollTo
@@ -52,6 +51,7 @@ export default {
 
 		return {
 			focus: 0,
+			modals: [],
 			nextFocus: null,
 			sheets: [],
 			scrollOptions,
@@ -59,8 +59,8 @@ export default {
 	},
 	mounted: function () {
 		this._spawnNext('collection-overview', {})
-		//this._spawnNext('collection', { path:'/Users/Julian/Documents/StGB.ivy' })
-		this._spawnNext('settings')
+		this._spawnNext('collection', { path:'/Users/Julian/Documents/StGB.ivy' })
+		//this._spawnNext('settings')
 	},
 	methods: {
 		/**

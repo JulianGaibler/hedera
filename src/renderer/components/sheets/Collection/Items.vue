@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import iconAdd from '../../assets/icons/outline-add-24px.svg'
+import iconAdd from '../../../assets/icons/outline-add-24px.svg'
 
 export default {
 	name: 'items',

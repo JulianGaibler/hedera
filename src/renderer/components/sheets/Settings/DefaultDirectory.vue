@@ -12,8 +12,8 @@ import { remote } from 'electron'
 import debounce from 'debounce'
 import Jetpack from 'fs-jetpack'
 
-import formOptions from '../elements/FormOptions'
-import formInput from '../elements/FormInput'
+import formOptions from '../../elements/FormOptions'
+import formInput from '../../elements/FormInput'
 
 export default {
 	name: 'defaultDirectory',
@@ -31,7 +31,7 @@ export default {
 				label: this.$t('label.location'),
 				placeholder: this.$t('label.placeholder.absolute_path'),
 				button: {
-					src: require('../../assets/icons/outline-folder_open-24px.svg'),
+					src: require('../../../assets/icons/outline-folder_open-24px.svg'),
 					callback: this._setPath,
 				}
 			},

@@ -6,7 +6,7 @@
 			<h2 class="flexGrow">{{collection.data?collection.data.title:'???'}}</h2>
 		</div>
 		
-		<actionBar :actions="config.actionButtons" />
+		<buttons class="actionBar" :actions="config.actionButtons" />
 
 		<div class="dist form">
 			<formInput v-model="searchQuery" :config="config.searchInput" />
@@ -18,17 +18,17 @@
 
 <script>
 import Vue from 'vue'
-
-import actionBar from './elements/ActionBar'
-import items from './Collection/Items'
-import formInput from './elements/FormInput'
-
-import Collection from '../classes/Collection'
-import Helpers from '../classes/Helpers'
 import { remote } from 'electron'
 
-import iconClose from '../assets/icons/outline-close-24px.svg'
-import iconAdd from '../assets/icons/outline-add-24px.svg'
+import Buttons from '../elements/Buttons'
+import formInput from '../elements/FormInput'
+import items from './Collection/Items'
+
+import Collection from '../../classes/Collection'
+import Helpers from '../../classes/Helpers'
+
+import iconClose from '../../assets/icons/outline-close-24px.svg'
+import iconAdd from '../../assets/icons/outline-add-24px.svg'
 
 export default {
 	name: 'collection',
@@ -63,15 +63,14 @@ export default {
 				searchInput
 
 			},
-
 			searchQuery: '',
 		}
 	},
 	components: {
 		iconAdd,
-		actionBar,
+		Buttons,
 		formInput,
-		items,
+		items
 	},
 	mounted: function() {
 		// 1. Loading Collection

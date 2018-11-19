@@ -6,6 +6,7 @@ const electronApp = (app || remote.app)
 
 const state = {
 	lang: 'default',
+	undoLimit: 'default',
 	defaultDirectory: 'default',
 	recentDocuments: []
 }
@@ -56,6 +57,8 @@ const getters = {
 		switch (field) {
 		case 'lang':
 			return electronApp.getLocale().split('-')[0]
+		case 'undoLimit':
+			return 100
 		case 'defaultDirectory':
 			return electronApp.getPath('documents')
 		}
