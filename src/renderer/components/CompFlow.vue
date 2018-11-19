@@ -11,6 +11,7 @@
 				<component :sheet="sheet" :ref="'c'+sheet.nr" :is="sheet.comp" :data="sheet.data" @compFlow="sheetCall($event)" />
 			</div>
 		</horizontalAnim>
+		<modal v-if="modals.length > 0" :data="modals[modals.length-1]" @pop="popModal()" />
 	</div>
 </template>
 
@@ -30,6 +31,7 @@ export default {
 	name: 'compFlow',
 	components: {
 		horizontalAnim,
+		Modal,
 
 		perfectChild,
 		collectionOverview,
@@ -80,6 +82,8 @@ export default {
 				closeSelf: this.closeSelf,
 				focusChild: this.focusChild,
 				focusParent: this.focusParent,
+				pushModal: this.pushModal,
+				popModal: this.popModal,
 			})
 			this.focus = len
 		},
@@ -144,6 +148,19 @@ export default {
 			let time = Math.abs(this.focus - nr)*300
 			this.focus = nr
 			if (this.sheets.length > 1) VueScrollTo.scrollTo(this.$refs['s'+nr][0], time, this.scrollOptions)
+		},
+		/**
+		 * Adds a modal to the modal-stack
+		 * @param {object} data - data required by one modal (see elements/Modal)
+		 */
+		pushModal: function(data) {
+			this.modals.push(data)
+		},
+		/**
+		 * Removes a modal to the modal-stack
+		 */
+		popModal: function() {
+			this.modals.pop()
 		},
 		/**
 		 * Callback for when horizontal-animation is finished
