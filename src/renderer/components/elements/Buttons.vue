@@ -9,6 +9,7 @@
 			>
 				<component v-if="item.icon" :is="item.icon" />
 				<span v-else-if="item.label">{{item.label}}</span>
+				<span v-else-if="item.label18">{{$t(item.label18)}}</span>
 			</div>
 		</div>
 	</div>

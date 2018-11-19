@@ -28,8 +28,8 @@ export default {
 			},
 			defaultDirectory: {
 				type: 'text',
-				label: this.$t('label.location'),
-				placeholder: this.$t('label.placeholder.absolute_path'),
+				label18: 'label.location',
+				placeholder18: 'label.placeholder.absolute_path',
 				button: {
 					src: require('../../../assets/icons/outline-folder_open-24px.svg'),
 					callback: this._setPath,
@@ -81,7 +81,7 @@ export default {
 							})
 					}
 					else {
-						this.$set(this.defaultDirectory, 'error', {info: this.$t('error.path_invalid')})
+						this.$set(this.defaultDirectory, 'error', {info18: 'error.path_invalid'})
 					}
 					this.intermediaryValue = value
 				})

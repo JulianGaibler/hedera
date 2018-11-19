@@ -48,7 +48,7 @@ export default {
 				callback: () => this.sheet.closeSelf(this.sheet)
 			}],
 			right: [{
-				label: this.$t(this.data ? 'action.change' : 'action.create'),
+				label18: this.data ? 'action.change' : 'action.create',
 				callback: this._submit
 			}]
 		}
@@ -56,19 +56,19 @@ export default {
 			title: {
 				value: this.data ? this.data.title : '',
 				type: 'text',
-				label: this.$t('label.title'),
-				placeholder: this.$t('label.placeholder.title_example')
+				label18: 'label.title',
+				placeholder18: 'label.placeholder.title_example'
 			},
 			title_short: {
 				value: this.data ? this.data.title_short : '',
 				type: 'text',
-				label: this.$t('label.abbreviation'),
-				placeholder: this.$t('label.placeholder.abbreviation_example')
+				label18: 'label.abbreviation',
+				placeholder18: 'label.placeholder.abbreviation_example'
 			},
 			directory: {
 				value: '',
 				type: 'text',
-				label: this.$t('label.location'),
+				label18: 'label.location',
 				placeholder: 'Absolute path of location',
 				button: {
 					src: require('../../assets/icons/outline-folder_open-24px.svg'),
@@ -81,7 +81,7 @@ export default {
 				min: 0,
 				max: 359,
 				step: 1,
-				label: this.$t('label.color')
+				label18: 'label.color'
 			},
 		}
 
@@ -127,11 +127,11 @@ export default {
 			// title
 			let title = this.formButtons.title.value.replace(/^\s+|\s+$/g, '')
 			if (title.length < 1) {
-				this.$set(this.formButtons.title, 'error', {info: this.$t('error.title_required')})
+				this.$set(this.formButtons.title, 'error', {info18: 'error.title_required'})
 				valid = false
 			}
 			else if ((Helpers.titleRegex()).test(title)) {
-				this.$set(this.formButtons.title, 'error', {info: this.$t('error.only_letters_numbers_hyphens')})
+				this.$set(this.formButtons.title, 'error', {info18: 'error.only_letters_numbers_hyphens'})
 				valid = false
 			}
 			else this.$set(this.formButtons.title, 'error', undefined)
@@ -139,11 +139,11 @@ export default {
 			// title_short
 			let title_short = this.formButtons.title_short.value.replace(/^\s+|\s+$/g, '')
 			if (title_short.length < 1) {
-				this.$set(this.formButtons.title_short, 'error', {info: this.$t('error.abbreviation_required')})
+				this.$set(this.formButtons.title_short, 'error', {info18: 'error.abbreviation_required'})
 				valid = false
 			}
 			else if ((/[^a-zA-Z0-9\- ]/g).test(title_short)) {
-				this.$set(this.formButtons.title_short, 'error', {info: this.$t('error.only_letters_numbers_hyphens_whitespace')})
+				this.$set(this.formButtons.title_short, 'error', {info18: 'error.only_letters_numbers_hyphens_whitespace'})
 				valid = false
 			}
 			else this.$set(this.formButtons.title_short, 'error', undefined)
@@ -160,7 +160,7 @@ export default {
 			// color
 			let color = parseInt(this.formButtons.color.value)
 			if (isNaN(color)) {
-				this.$set(this.formButtons.color, 'error', {info: this.$t('error.unknown_error')})
+				this.$set(this.formButtons.color, 'error', {info18: 'error.unknown_error'})
 				valid = false
 			}
 			else this.$set(this.formButtons.color, 'error', undefined)
@@ -172,9 +172,9 @@ export default {
 					this.sheet.get(0).open(file)
 				}
 				else {
-					if (saved === 1) this.$set(this.formButtons.directory, 'error', {info: this.$t('error.file_already_exists')})
-					if (saved === 2) this.$set(this.formButtons.directory, 'error', {info: this.$t('error.read_only_directory')})
-					else this.$set(this.formButtons.directory, 'error', {info: this.$t('error.unknown_error')})
+					if (saved === 1) this.$set(this.formButtons.directory, 'error', {info18: 'error.file_already_exists'})
+					if (saved === 2) this.$set(this.formButtons.directory, 'error', {info18: 'error.read_only_directory'})
+					else this.$set(this.formButtons.directory, 'error', {info18: 'error.unknown_error'})
 				}
 			} else if (valid && this.data) {
 				this.sheet.get(this.sheet.nr-1)._editCollection(title, title_short, color)

@@ -47,13 +47,13 @@ export default {
 				callback: () => this.sheet.closeSelf(this.sheet)
 			}],
 			right: [{
-				label: this.$t('action.edit._'),
+				label18: 'action.edit._',
 				callback: this.editCollection
 			}]
 		}
 		let searchInput = {
 			type: 'text',
-			placeholder: this.$t('label.search')+'...',
+			placeholder18: 'label.search',
 		}
 		return {
 			collection: {},

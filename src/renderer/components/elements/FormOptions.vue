@@ -9,7 +9,7 @@
 					v-model="selectedOptions"
 					@change="onChange"
 				>
-				{{option.label}}
+				{{data.label ? data.label : $t(data.label18)}}
 			</label>
 		</div>
 	</div>
@@ -27,7 +27,7 @@ export default {
 	 * 
 	 * {string} config.type - checkbox or radio
 	 * {array} config.options - array of options
-	 * {string} config.options.label - label of one option
+	 * {string} config.options.label - label of one option (label18 to use i18n plugin)
 	 * {(number|string)} config.options.value - value of one option
 	 */
 	props: [ 'value', 'config', 'disabled' ],
