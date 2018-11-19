@@ -5,7 +5,7 @@
 				v-for="(item, index) in actions[pos]" 
 				:key="index"
 				@click="clickButton(item.callback)"
-				:class="'roundButton '+item.class"
+				:class="'roundButton' + (item.class?' '+item.class:'')"
 			>
 				<component v-if="item.icon" :is="item.icon" />
 				<span v-else-if="item.label">{{item.label}}</span>
