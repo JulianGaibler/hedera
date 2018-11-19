@@ -280,7 +280,6 @@ header {
 	}
 
 	.dist {
-		width: 41rem;
 		margin-left: 4rem;
 		margin-right: 4rem;
 	}
@@ -529,6 +528,22 @@ hr {
 		color: $hErrorRed;
 		border-color: lighten( $hErrorRed, 10% );
 	}
+	&.selected {
+		position: relative;
+		> * {
+			z-index: 1;
+		}
+		&::before {
+			content: '';
+			border-radius: 2rem;
+			background-color: $hBorderColor;
+			position: absolute;
+			left: .15rem;
+			right: .15rem;
+			top: .15rem;
+			bottom: .15rem;
+		}
+	}
 
 	span {
 		font-size: .75rem;
@@ -542,7 +557,6 @@ hr {
 }
 
 .modal {
-	content: '';
 	display: flex;
 	justify-content: center;
 	align-items: center;
