@@ -21,11 +21,13 @@ import VueScrollTo from 'vue-scrollto'
 
 import horizontalAnim from './elements/HorizontalAnim'
 import Modal from './elements/Modal'
+
 import perfectChild from './sheets/PerfectChild'
 import collectionOverview from './sheets/CollectionOverview'
 import collection from './sheets/Collection'
 import createCollection from './sheets/CreateCollection'
 import settings from './sheets/Settings'
+import module from './sheets/Collection/Module'
 
 export default {
 	name: 'compFlow',
@@ -38,6 +40,7 @@ export default {
 		createCollection,
 		collection,
 		settings,
+		module,
 	},
 	data: function () {
 		// Settings for Vue-ScrollTo

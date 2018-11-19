@@ -8,6 +8,7 @@
 			<ul>
 				<li v-for="obj in main_modules"
 					:key="obj._id"
+					@click="_openModule(obj._id)"
 				>
 					{{obj.title ? obj.title : $t('state.untitled')}}
 				</li>
@@ -25,6 +26,7 @@
 			<ul>
 				<li v-for="obj in reusable_modules"
 					:key="obj._id"
+					@click="_openModule(obj._id)"
 				>
 					{{obj.title ? obj.title : $t('state.untitled')}}
 				</li>
@@ -90,12 +92,11 @@ export default {
 		this.collection.events.unsubscribe('terms', this.updateTerms)
 	},
 	methods: {
-		/**
-		 * Opens 'create-collection'-sheet as child
-		 */
+		_openModule: function(_id) {
+			this.$emit('openModule', _id)
+		},
 		_openTerm: function(_id) {
-			_id
-			// TODO
+			this.$emit('openTerm', _id)
 		},
 		updateModules: function() {
 			this.collection.db.modules.where('dependency_type').equals(1).toArray().then(array => {

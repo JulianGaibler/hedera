@@ -12,7 +12,7 @@
 			<formInput v-model="searchQuery" :config="config.searchInput" />
 		</div>
 
-		<items v-if="!loading" :collection="collection" />
+		<items v-if="!loading" :collection="collection" @openModule="openModule" @openTerm="openTerm" />
 	</div>
 </template>
 
@@ -102,6 +102,14 @@ export default {
 		remote.getCurrentWindow().setRepresentedFilename('')
 	},
 	methods: {
+		openModule: function(_id) {
+			this.sheet.spawnChild(this.sheet, 'module', {
+				_id
+			})
+		},
+		openTerm: function(_id) {
+			_id
+		},
 		/**
 		 * Look at Helper-Class
 		 */
