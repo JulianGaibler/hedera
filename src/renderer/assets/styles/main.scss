@@ -280,6 +280,7 @@ header {
 	}
 
 	.dist {
+		width: 41rem;
 		margin-left: 4rem;
 		margin-right: 4rem;
 	}
@@ -495,11 +496,17 @@ hr {
 		display: flex;
 		flex: 1;
 		justify-content: flex-start;
+		> * {
+			margin-right: .5rem;
+		}
 	}
 	&.right {
 		display: flex;
 		flex: 1;
 		justify-content: flex-end;
+		> * {
+			margin-left: .5rem;
+		}
 	}
 }
 
@@ -529,7 +536,7 @@ hr {
 		line-height: .9;
 	}
 	svg {
-		transform: scale(.65);
+		width: 1rem;
 		fill: $hBlack;
 	}
 }
@@ -581,7 +588,6 @@ hr {
 			.roundButton {
 				height: 2rem;
 				min-width: 6rem;
-				margin-left: .5rem;
 			}
 		}
 	}
