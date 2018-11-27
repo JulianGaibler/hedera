@@ -1,10 +1,10 @@
 <template>
 	<div>
 		<div class="listMenu">
-			<div>Main Module</div>
+			<div class="sheetHeader">Main Module</div>
 			<hr>
 
-			<div class="dist">
+			<div class="dist module">
 				<h3>§35b</h3>
 				<h2>Brandstiftung in Internationalen Gewässern</h2>
 				<p>Einwirkung auf die strukturelle Integrität eines Gebäudes durch Feuer in tiefen Gewässern oder luftleeren Räumen welche keinem Staatsgebiet zugeordet sind sofern Arnold keinen Impliziten Anspruch auf sie hat.</p>

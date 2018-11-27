@@ -290,6 +290,15 @@ header {
 		fill: $hLightGrey;
 	}
 
+	.sheetHeader {
+		font-size: 0.875rem;
+		color: $hDarkGrey;
+		text-align: center;
+		text-transform: uppercase;
+		padding: .6rem;
+		font-weight: 500;
+	}
+
 	ul {
 		display: block;
 		li {
@@ -619,4 +628,22 @@ hr {
 .modal-leave-active > div {
   -webkit-transform: scale(.9);
   transform: scale(.9);
+}
+
+.module {
+	margin-top: 2.5rem;
+	margin-bottom: 2.5rem;
+	h3 {
+		font-size: .875rem;
+		color: $hDarkGrey;
+		margin-bottom: 0rem;
+	}
+	h2 {
+		font-size: 1.4375rem;
+		margin-bottom: 0rem;
+	}
+	p {
+		font-size: .875rem;
+		margin-bottom: 0rem;
+	}
 }
