@@ -11,6 +11,16 @@
 			</div>
 
 			<buttons class="actionBar" :actions="config.actionButtons" />
+
+			<div class="dist">
+				<div class="moduleItem">
+					<div class="icon"><typeBool /></div>
+					<div class="info">
+						<div class="top">Vermögensschaden</div>
+						<div class="bottom">Jedes Handeln, Dulden oder Unterlassen, das sich unmittelbar vermögensmindernd für Arnold auswirkt.</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </template>
@@ -62,7 +72,8 @@ export default {
 		}
 	},
 	components: {
-		Buttons
+		Buttons,
+		typeBool
 	},
 	methods: { }
 }

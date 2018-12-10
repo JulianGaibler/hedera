@@ -292,7 +292,7 @@ header {
 
 	.sheetHeader {
 		font-size: 0.875rem;
-		color: $hDarkGrey;
+		color: $hLightGrey;
 		text-align: center;
 		text-transform: uppercase;
 		padding: .6rem;
@@ -640,10 +640,38 @@ hr {
 	}
 	h2 {
 		font-size: 1.4375rem;
-		margin-bottom: 0rem;
+		margin-bottom: 1rem;
 	}
 	p {
 		font-size: .875rem;
 		margin-bottom: 0rem;
+	}
+}
+
+.moduleItem {
+	display: flex;
+	.icon, .info {
+		padding: .25rem 0;
+	}
+	.icon {
+		border-right: $hDarkBorder;
+		padding-left: .5rem;
+		padding-right: .5rem;
+		svg {
+			margin-top: .25rem;
+			width: 1.1rem;
+		}
+	}
+	.info {
+		padding-left: .8rem;
+		.top {
+			color: $hBlack;
+			font-size: 1rem;
+			font-family: 'Roboto Slab', serif;
+			margin-bottom: .25rem;
+		}
+		.bottom {
+			font-size: .875rem;
+		}
 	}
 }
