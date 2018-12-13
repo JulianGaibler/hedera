@@ -1,9 +1,11 @@
 import Dexie from 'dexie'
 import {shell} from 'electron'
+
 import AppData from './AppData'
 import Helpers from './Helpers'
 import Actions from './Collection/Actions'
 import Listeners from './Collection/Listeners'
+
 import 'dexie-observable'
 
 export default class Collection {
@@ -186,33 +188,6 @@ export default class Collection {
 			//this[from].push(a)
 		})
 
-	}
-
-	//
-	// Action creation
-	//
-
-	/**
-	 * Creates an empty module
-	 * @param  {number} dependency_type
-	 * @param  {string} [dependent_id]
-	 */
-	createModule(dependency_type, dependent_id) {
-		let state = {
-			_id: Helpers.getRandomID('m'),
-			node_type: 0,
-			dependency_type,
-			title: '',
-			sortkey: '',
-			desc: '',
-		}
-
-		if (dependency_type === 0) 
-			state.dependent_id = dependent_id
-
-		this.apply(
-			Actions.create('modules', 'create', {state})
-		)
 	}
 
 	/**

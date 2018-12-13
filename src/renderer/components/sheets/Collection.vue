@@ -104,7 +104,8 @@ export default {
 	methods: {
 		openModule: function(_id) {
 			this.sheet.spawnChild(this.sheet, 'module', {
-				_id
+				_id,
+				collection: this.collection
 			})
 		},
 		openTerm: function(_id) {

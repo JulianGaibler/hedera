@@ -3,7 +3,7 @@
 		<div class="dist form">
 			<div class="hflex">
 				<h3 class="grow">{{ $t('info.modules.main') }}</h3>
-				<div @click="collection.createModule(1)"><div class="iconButton"><iconAdd /></div></div>
+				<div @click="_createModule(1)"><div class="iconButton"><iconAdd /></div></div>
 			</div>
 			<ul>
 				<li v-for="obj in main_modules"
@@ -21,7 +21,7 @@
 		<div class="dist form">
 			<div class="hflex">
 				<h3 class="grow">{{ $t('info.modules.reuseable') }}</h3>
-				<div @click="collection.createModule(2)"><div class="iconButton"><iconAdd /></div></div>
+				<div @click="_createModule(2)"><div class="iconButton"><iconAdd /></div></div>
 			</div>
 			<ul>
 				<li v-for="obj in reusable_modules"
@@ -59,6 +59,7 @@
 
 <script>
 import iconAdd from '../../../assets/icons/outline-add-24px.svg'
+import hModule from '../../../classes/Collection/Models/hModule'
 
 export default {
 	name: 'items',
@@ -97,6 +98,9 @@ export default {
 		},
 		_openTerm: function(_id) {
 			this.$emit('openTerm', _id)
+		},
+		_createModule: function(dependencyType, dependentID) {
+			this.collection.apply(hModule.create(dependencyType, dependentID))
 		},
 		updateModules: function() {
 			this.collection.db.modules.where('dependency_type').equals(1).toArray().then(array => {
