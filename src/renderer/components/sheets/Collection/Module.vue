@@ -1,13 +1,13 @@
 <template>
 	<div>
-		<div class="listMenu">
+		<div v-if="moduleData" class="listMenu">
 			<div class="sheetHeader">Main Module</div>
 			<hr>
 
 			<div class="dist module">
-				<h3>§35b</h3>
-				<h2>Brandstiftung in Internationalen Gewässern</h2>
-				<p>Einwirkung auf die strukturelle Integrität eines Gebäudes durch Feuer in tiefen Gewässern oder luftleeren Räumen welche keinem Staatsgebiet zugeordet sind sofern Arnold keinen Impliziten Anspruch auf sie hat.</p>
+				<h3>{{moduleData.sortkey}}</h3>
+				<h2>{{moduleData.title}}</h2>
+				<p>{{moduleData.desc}}</p>
 			</div>
 
 			<buttons class="actionBar" :actions="config.actionButtons" />
@@ -66,6 +66,7 @@ export default {
 			]
 		}
 		return {
+			moduleData: undefined,
 			config: {
 				actionButtons,
 			},
@@ -73,8 +74,19 @@ export default {
 	},
 	components: {
 		Buttons,
-		typeBool
+		typeBool,
 	},
-	methods: { }
+	mounted: function() {
+		this.updateModule()
+
+		this.data.collection.events.subscribe('modules', this.updateModule)
+	},
+	methods: {
+		updateModule: function() {
+			this.data.collection.db.modules.get(this.data._id).then(res => {
+				this.moduleData = res
+			})
+		},
+	}
 }
 </script>
