@@ -1,5 +1,5 @@
 <template>
-	<div class="bottombar">
+	<div class="bottomBar">
 		<div class="listMenu">
 			<div class="headline">
 				<h2 v-if="data" class="grey">{{ $t('action.edit.collection') }}</h2>

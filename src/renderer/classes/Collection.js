@@ -140,11 +140,12 @@ export default class Collection {
 	 * @param  {Action} Action-object
 	 */
 	apply(action) {
+		console.log(`%cApplyAction: ${action.action_type}`, 'color: #bada55')
 		this._apply(action).then((result) => {
-			//console.warn(result)
+			console.log('done: ', result)
 			this.undo.push(action)
 		}).catch((error) => {
-			//console.warn(error)
+			console.warn(error)
 		})
 
 	}
@@ -160,6 +161,8 @@ export default class Collection {
 			return this.db[a.data_type].add(a.state)
 		else if (a.action_type === 'remove')
 			return this.db[a.data_type].delete(a.state._id)
+		else if (a.action_type === 'change')
+			return this.db[a.data_type].put(a.to, a.from._id)
 
 		Promise.reject(new Error('Could not apply collection-action'))
 	}
