@@ -166,16 +166,16 @@ export default {
 			else this.$set(this.formButtons.color, 'error', undefined)
 
 			if (valid && !this.data) {
-				let saved = AppData.createCollection({title, title_short, file, color})
-				if (saved === 0) {
-					this.sheet.closeSelf(this.sheet)
-					this.sheet.get(0).open(file)
-				}
-				else {
-					if (saved === 1) this.$set(this.formButtons.directory, 'error', {info18: 'error.file_already_exists'})
-					if (saved === 2) this.$set(this.formButtons.directory, 'error', {info18: 'error.read_only_directory'})
-					else this.$set(this.formButtons.directory, 'error', {info18: 'error.unknown_error'})
-				}
+				AppData.createCollection({title, title_short, file, color})
+					.then(() => {
+						this.sheet.closeSelf(this.sheet)
+						this.sheet.get(0).open(file)
+					})
+					.catch(e => {
+						if (e === 1) this.$set(this.formButtons.directory, 'error', {info18: 'error.file_already_exists'})
+						if (e === 2) this.$set(this.formButtons.directory, 'error', {info18: 'error.read_only_directory'})
+						else this.$set(this.formButtons.directory, 'error', {info18: 'error.unknown_error'})
+					})
 			} else if (valid && this.data) {
 				this.sheet.get(this.sheet.nr-1)._editCollection(title, title_short, color)
 			}
