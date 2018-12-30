@@ -2,7 +2,7 @@
 	<div>
 		<div class="dist form">
 			<div class="hflex">
-				<h3 class="grow">{{ $t('info.modules.main') }}</h3>
+				<h3 class="grow">{{ $t('info.modules.mains') }}</h3>
 				<div @click="_createModule(1)"><div class="iconButton"><iconAdd /></div></div>
 			</div>
 			<ul>
@@ -20,7 +20,7 @@
 
 		<div class="dist form">
 			<div class="hflex">
-				<h3 class="grow">{{ $t('info.modules.reuseable') }}</h3>
+				<h3 class="grow">{{ $t('info.modules.reuseables') }}</h3>
 				<div @click="_createModule(2)"><div class="iconButton"><iconAdd /></div></div>
 			</div>
 			<ul>
@@ -38,7 +38,7 @@
 
 		<div class="dist form">
 			<div class="hflex">
-				<h3 class="grow">{{ $t('info.terms.reuseable') }}</h3>
+				<h3 class="grow">{{ $t('info.terms.reuseables') }}</h3>
 				<div @click="collection.createTerm()"><div class="iconButton"><iconAdd /></div></div>
 			</div>
 			<ul>

@@ -85,7 +85,7 @@ export default {
 			// 6. We're done with the setup
 			this.loading = false
 
-			// 7. Executing additionaly passed methods
+			// 7. Executing additionally passed methods
 			if (this.data.callOnMount) {
 				for (var i = 0; i < this.data.callOnMount.length; i++) {
 					this[this.data.callOnMount[i].name].apply(this, this.data.callOnMount[i].args)
