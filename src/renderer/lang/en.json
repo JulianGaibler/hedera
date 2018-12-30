@@ -20,12 +20,17 @@
 	"info": {
 		"modules": {
 			"_": "0 modules | 1 module | {count} modules",
-			"main": "Main Modules",
-			"reuseable": "Reuseable Modules"
+			"main": "Main Module",
+			"mains": "Main Modules",
+			"reuseable": "Reuseable Module",
+			"reuseables": "Reuseable Modules",
+			"child": "Child Module",
+			"children": "Child Modules"
 		},
 		"terms": {
 			"_": "0 terms | 1 term | {count} terms",
-			"reuseable": "Reuseable Terms"
+			"reuseable": "Reuseable Term",
+			"reuseables": "Reuseable Terms"
 		}
 	},
 	"settings": {
