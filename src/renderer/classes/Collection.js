@@ -157,14 +157,38 @@ export default class Collection {
 	 * @return {Promise} Promise
 	 */
 	_apply(a) {
-		if (a.action_type === 'create') 
-			return this.db[a.data_type].add(a.state)
-		else if (a.action_type === 'remove')
-			return this.db[a.data_type].delete(a.state._id)
-		else if (a.action_type === 'change')
-			return this.db[a.data_type].put(a.to, a.from._id)
+		let databases = []
+		if (a.action_type === 'set') {
+			for (var i = a.actions.length - 1; i >= 0; i--) {
+				databases.push(a.actions[i].data_type)
+			}
+		} else {
+			databases.push(a.data_type)
+		}
+		console.log('arr:', a)
 
-		Promise.reject(new Error('Could not apply collection-action'))
+		return this.db.transaction('rw', databases, () => {
+			let execAction = a => {
+				if (a.action_type === 'create') 
+					return this.db[a.data_type].add(a.state)
+				else if (a.action_type === 'remove')
+					return this.db[a.data_type].delete(a.state._id)
+				else if (a.action_type === 'change')
+					return this.db[a.data_type].put(a.to, a.from._id)
+				else if (a.action_type === 'edit') {
+					let o = {}
+					o[a.field] = a.to
+					return this.db[a.data_type].where({_id: a._id}).modify(o)
+				}
+			}
+			if (a.action_type === 'set') {
+				for (var i = 0; i < a.actions.length; i++) {
+					execAction(a.actions[i])
+				}
+			} else {
+				execAction(a)
+			}
+		})
 	}
 
 	/**
