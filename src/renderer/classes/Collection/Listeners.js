@@ -28,9 +28,9 @@ export default class Listeners {
 		// split changes by tables
 		let tables = this.splitByTable(changes)
 		let tableNames = Object.keys(tables)
-		for (var i = tableNames.length - 1; i >= 0; i--) {
+		for (let i = tableNames.length - 1; i >= 0; i--) {
 			if (!this.subscriptions[tableNames[i]]) continue
-			for (var j = this.subscriptions[tableNames[i]].length - 1; i >= 0; i--) {
+			for (let j = this.subscriptions[tableNames[i]].length - 1; j >= 0; j--) {
 				this.subscriptions[tableNames[i]][j](tables[tableNames[i]])
 			}
 		}
@@ -39,7 +39,7 @@ export default class Listeners {
 
 	splitByTable(changes) {
 		let obj = {}
-		for (var i = changes.length - 1; i >= 0; i--) {
+		for (let i = changes.length - 1; i >= 0; i--) {
 			let table = changes[i].table
 			if (!obj[table]) obj[table] = []
 			obj[table].push(changes[i])
