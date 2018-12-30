@@ -44,7 +44,7 @@ export default class hModule {
 		let s = {...state}
 
 		if (node_type === 1 || node_type === 2) {
-			s.children = []
+			if (!s.children) s.children = []
 		} else {
 			delete s.children
 		}
