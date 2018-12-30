@@ -109,6 +109,9 @@ export default {
 
 		this.data.collection.events.subscribe('modules', this.updateModuleData_)
 	},
+	beforeDestroy: function() {
+		this.data.collection.events.unsubscribe('modules', this.updateModuleData_)
+	},
 	methods: {
 		updateModuleData_: function() {
 			this.data.collection.db.modules.get(this.data._id).then(res => {
