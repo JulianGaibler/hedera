@@ -11,7 +11,7 @@
 			</div>
 		</div>
 		<buttons class="actionBar" :actions="actionButtons" />
-		<div class="listMenu bottomBar">
+		<div v-if="moduleData.node_type !== 0" class="listMenu bottomBar">
 			<div class="dist">
 				<div v-for="item in dependents" :key="item._id" class="moduleItem">
 					<div class="icon"><typeBool /></div>
@@ -58,11 +58,11 @@ export default {
 			}],
 			right: [
 				{
-					icon: typeAnd,
+					icon: typeBool,
 					callback: () => {this.changeType_(0)}
 				},
 				{
-					icon: typeBool,
+					icon: typeAnd,
 					callback: () => {this.changeType_(1)}
 				},
 				{
@@ -74,11 +74,11 @@ export default {
 		let addModuleButtons = {
 			right: [
 				{
-					icon: typeAnd,
+					icon: typeBool,
 					callback: () => {this.createSubModule_(0)}
 				},
 				{
-					icon: typeBool,
+					icon: typeAnd,
 					callback: () => {this.createSubModule_(1)}
 				},
 				{
@@ -105,16 +105,19 @@ export default {
 		typeBool,
 	},
 	mounted: function() {
-		this.update_()
+		this.updateModuleData_()
 
-		this.data.collection.events.subscribe('modules', this.update_)
+		this.data.collection.events.subscribe('modules', this.updateModuleData_)
 	},
 	methods: {
-		update_: function() {
+		updateModuleData_: function() {
 			this.data.collection.db.modules.get(this.data._id).then(res => {
 				this.moduleData = res
+				if (this.moduleData.node_type !== 0) this.updateDependents_()
 			})
-			this.data.collection.db.modules.where('dependent_id').equals(this.data._id).toArray().then(res => {
+		},
+		updateDependents_: function() {
+			this.data.collection.db.modules.where('_id').anyOf(this.moduleData.children).toArray().then(res => {
 				this.dependents = res
 			})
 		},
@@ -138,7 +141,7 @@ export default {
 			})
 		},
 		createSubModule_: function(node_type) {
-			this.data.collection.apply(hModule.create(0, this.moduleData._id, node_type))
+			this.data.collection.apply(hModule.create(0, this.moduleData, node_type))
 		},
 	},
 	computed: {
