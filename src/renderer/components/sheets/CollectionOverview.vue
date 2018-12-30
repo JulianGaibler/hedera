@@ -1,5 +1,5 @@
 <template>
-	<div class="collectionOverview bottomBar">
+	<div class="collectionOverview listMenu">
 		<div>
 			<div v-for="doc in recentDocuments" :key="doc.file" class="collectionBook">
 				<div class="cover" @click="open(doc.file)" :style="{'background': _getColor(doc.color)}">

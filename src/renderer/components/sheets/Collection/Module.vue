@@ -1,32 +1,34 @@
 <template>
-	<div v-if="moduleData">
-		<div class="listMenu">
-			<div class="sheetHeader">Main Module</div>
-			<hr>
+	<div>
+		<template v-if="moduleData">
+			<div class="listMenu">
+				<div class="sheetHeader">{{ $t(`info.modules.${config.i18nModuleTypes[moduleData.dependency_type]}`) }}</div>
+				<hr>
 
-			<div class="dist module">
-				<h3>{{moduleData.sortkey}}</h3>
-				<h2>{{moduleData.title}}</h2>
-				<p>{{moduleData.desc}}</p>
-			</div>
-		</div>
-		<buttons class="actionBar" :actions="actionButtons" />
-		<div v-if="moduleData.node_type !== 0" class="listMenu bottomBar">
-			<div class="dist">
-				<div v-for="item in dependents" :key="item._id" class="moduleItem">
-					<div class="icon"><typeBool /></div>
-					<div class="info">
-						<div class="top">{{item.title ? item.title : $t('state.untitled')}}</div>
-						<div class="bottom">{{item.desc ? item.desc : $t('state.no_description')}}</div>
-					</div>
+				<div class="dist module">
+					<h3>{{moduleData.sortkey}}</h3>
+					<h2>{{moduleData.title}}</h2>
+					<p>{{moduleData.desc}}</p>
 				</div>
 			</div>
-			<div class="dist botomAction">
-				<hr>
-				<div class="top">Add Module</div>
-				<buttons :actions="config.addModuleButtons" />
+			<buttons class="actionBar" :actions="actionButtons" />
+			<div v-if="moduleData.node_type !== 0" class="listMenu bottomBar">
+				<div class="dist">
+					<div v-for="item in dependents" :key="item._id" class="moduleItem">
+						<div class="icon"><typeBool /></div>
+						<div class="info">
+							<div class="top">{{item.title ? item.title : $t('state.untitled')}}</div>
+							<div class="bottom">{{item.desc ? item.desc : $t('state.no_description')}}</div>
+						</div>
+					</div>
+				</div>
+				<div class="dist botomAction">
+					<hr>
+					<div class="top">Add Module</div>
+					<buttons :actions="config.addModuleButtons" />
+				</div>
 			</div>
-		</div>
+		</template>
 	</div>
 </template>
 
@@ -96,7 +98,8 @@ export default {
 			dependents: [],
 			config: {
 				actionButtons,
-				addModuleButtons
+				addModuleButtons,
+				i18nModuleTypes: ['child', 'main', 'reuseable']
 			},
 		}
 	},

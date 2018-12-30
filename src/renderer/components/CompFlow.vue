@@ -1,6 +1,6 @@
 <template>
-	<div id="compFlow">
-		<horizontalAnim :callback="_animEnded">
+	<div ref="container" id="compFlow">
+		<horizontalAnim>
 			<div
 				v-for="sheet in sheets"
 				:key="sheet.nr"
@@ -47,7 +47,7 @@ export default {
 		let scrollOptions = {
 			container: '#compFlow',
 			easing: [0.45, 0.05, 0.55, 0.95],
-			offset: -60,
+			offset: this._calculateOffset,
 			force: true,
 			cancelable: true,
 			x: true,
@@ -64,7 +64,8 @@ export default {
 	},
 	mounted: function () {
 		this._spawnNext('collection-overview', {})
-		this._spawnNext('collection', { path:'/Users/Julian/Documents/StGB.ivy' })
+		this._spawnNext('perfectChild', {})
+		//this._spawnNext('collection', { path:'/Users/Julian/Documents/StGB.ivy' })
 		//this._spawnNext('settings')
 	},
 	methods: {
@@ -89,6 +90,18 @@ export default {
 				popModal: this.popModal,
 			})
 			this.focus = len
+			Vue.nextTick(() => {
+				this._scrollToFocus()
+			})
+		},
+		/**
+		 * Calculates offset
+		 * @return {Number} offset
+		 */
+		_calculateOffset: function() {
+			let total = this.$refs.container.clientWidth
+			let focus = this.$refs['c'+this.focus][0].$el.clientWidth
+			return -((total/2)-(focus/2))
 		},
 		/**
 		 * Closes all existing children and created new one
@@ -119,6 +132,7 @@ export default {
 		 */
 		closeChild: function(sheet) {
 			this.sheets.splice(sheet.nr+1)
+			this.focusSheet(sheet.nr)
 		},
 		/**
 		 * Closes given sheet and all children
@@ -126,6 +140,7 @@ export default {
 		 */
 		closeSelf: function(sheet) {
 			this.sheets.splice(sheet.nr)
+			this.focusSheet(sheet.nr-1)
 		},
 		/**
 		 * Focus and scroll to child of sheet
@@ -148,9 +163,8 @@ export default {
 		 * @param {number} nr - sheet-nr to scroll to
 		 */
 		focusSheet: function(nr) {
-			let time = Math.abs(this.focus - nr)*300
 			this.focus = nr
-			if (this.sheets.length > 1) VueScrollTo.scrollTo(this.$refs['s'+nr][0], time, this.scrollOptions)
+			this._scrollToFocus()
 		},
 		/**
 		 * Adds a modal to the modal-stack
@@ -168,9 +182,8 @@ export default {
 		/**
 		 * Callback for when horizontal-animation is finished
 		 */
-		_animEnded: function() {
-			if (this.sheets.length > 1)
-				VueScrollTo.scrollTo(this.$refs['s'+this.focus][0], 500, this.scrollOptions)
+		_scrollToFocus: function() {
+			VueScrollTo.scrollTo(this.$refs['s'+this.focus][0], 500, this.scrollOptions)
 		}
 	}
 }
