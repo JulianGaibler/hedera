@@ -22,7 +22,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="dist botomAction">
+				<div class="dist bottomAction center">
 					<hr>
 					<div class="top">Add Module</div>
 					<buttons :actions="config.addModuleButtons" />

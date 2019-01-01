@@ -1,26 +1,36 @@
 <template>
 	<div class="collectionOverview listMenu">
-		<div>
-			<div v-for="doc in recentDocuments" :key="doc.file" class="collectionBook">
-				<div class="cover" @click="open(doc.file)" :style="{'background': _getColor(doc.color)}">
-					<div>{{doc.title_short}}</div>
-					<div>{{doc.title}}</div>
-					<div>
-						<div>{{ $tc('info.modules._', doc.stats.modules) }}</div>
-						<div>{{ $tc('info.terms._', doc.stats.terms) }}</div>
-					</div>
-				</div>
-				<div class="bar">
-					<div class="button" @click="edit(doc.file)"><IconEdit /></div>
-					<div class="button" @click="folder(doc.file)"><IconOpen /></div>
-					<div class="fillH" />
-					<div class="button" @click="trash(doc.file)"><IconDelete /></div>
-				</div>
+		<div v-for="doc in recentDocuments" :key="doc.file" class="collectionPreview">
+			<div class="title" @click="open(doc.file)">
+				<h1 :style="_getColor(doc.color)">{{doc.title_short}}</h1>
+				<h2>{{doc.title}}</h2>
+			</div>
+			<div class="stats">
+				<div>{{ $tc('info.modules._', doc.stats.modules) }}</div>
+				<div>{{ $tc('info.terms._', doc.stats.terms) }}</div>
+			</div>
+			<div class="controls bottomAction">
+				<buttons :actions="{
+					right: [
+						{
+							icon: icons.IconOpen,
+							callback: () => {folder(doc.file)}
+						},
+						{
+							icon: icons.IconDelete,
+							callback: () => {trash(doc.file)}
+						},
+						{
+							label18: 'action.open._',
+							callback: () => {open(doc.file)}
+						},
+					]
+				}"
+				/>
 			</div>
 		</div>
-		<div>
-			<div class="cornerBtn" @click="sheet.spawnChild(sheet ,'createCollection')">{{ $t('action.open') }}</div>
-			<div class="cornerBtn" @click="sheet.spawnChild(sheet ,'createCollection')">{{ $t('action.new.collection') }}</div>
+		<div class="actions bottomAction">
+			<buttons :actions="config.actionButtons" />
 		</div>
 	</div>
 </template>
@@ -31,7 +41,8 @@ import Helpers from '../../classes/Helpers'
 import AppData from '../../classes/AppData'
 import { shell } from 'electron'
 
-import IconEdit from '../../assets/icons/outline-edit-24px.svg'
+import Buttons from '../elements/Buttons'
+
 import IconOpen from '../../assets/icons/outline-folder_open-24px.svg'
 import IconDelete from '../../assets/icons/outline-delete-24px.svg'
 
@@ -39,12 +50,30 @@ export default {
 	name: 'collectionOverview',
 	props: ['sheet'],
 	data: function () {
-		return { }
+		let actionButtons = {
+			right: [
+				{
+					label18: 'action.open.collection',
+					callback: () => {this.sheet.spawnChild(this.sheet ,'createCollection')}
+				},
+				{
+					label18: 'action.new.collection',
+					callback: () => {this.sheet.spawnChild(this.sheet ,'createCollection')}
+				},
+			]
+		}
+		return {
+			config: {
+				actionButtons
+			},
+			icons: {
+				IconOpen,
+				IconDelete,
+			}
+		}
 	},
 	components: {
-		IconEdit,
-		IconOpen,
-		IconDelete,
+		Buttons,
 	},
 	methods: {
 		/**
@@ -55,24 +84,6 @@ export default {
 			if (this._exists(path))
 				if (!this._alreadyOpen(path))
 					this.sheet.spawnChild(this.sheet, 'collection', { path })
-		},
-		/**
-		 * Opens Collection and calls editCollection
-		 * if file exists and not already open
-		 * @param {string} full path of file
-		 */
-		edit: function(path) {
-			if (this._exists(path)) {
-				let nextSheet = this._alreadyOpen(path)
-				if (nextSheet) {
-					nextSheet.editCollection()
-				} else {
-					this.sheet.spawnChild(this.sheet, 'collection', {
-						path,
-						callOnMount: [{ name: 'editCollection',args: [] }]
-					})
-				}
-			}
 		},
 		/**
 		 * Opens folder of collection if file exists
@@ -112,12 +123,18 @@ export default {
 		/**
 		 * Look at Helper-Class
 		 */
-		_getColor: hue => Helpers.getCssGradient(hue),
+		_getColor: function(hue) {
+			return {
+				'background-image': Helpers.getCssGradient(parseInt(hue)),
+				'-webkit-background-clip': 'text',
+				'-webkit-text-fill-color': 'transparent'
+			}
+		}
 	},
 	computed: {
 		...mapState({
 			recentDocuments: state => state.Settings.recentDocuments
-		})
+		}),
 	},
 }
 </script>

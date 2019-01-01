@@ -148,7 +148,7 @@ export default {
 				file: this.data.path,
 				color: this.collection.data.color,
 				stats: {
-					modules: this.collection.data.main_modules.length + this.collection.data.reusable_modules.length,
+					modules: this.collection.data.modules.length,
 					terms: this.collection.data.terms.length,
 				}
 			}
