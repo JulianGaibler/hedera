@@ -18,6 +18,7 @@
 <script>
 import Vue from 'vue'
 import VueScrollTo from 'vue-scrollto'
+import debounce from 'debounce'
 
 import horizontalAnim from './elements/HorizontalAnim'
 import Modal from './elements/Modal'
@@ -63,10 +64,12 @@ export default {
 		}
 	},
 	mounted: function () {
+		window.addEventListener('resize', debounce(this._scrollToFocus, 600))
+
+
 		this._spawnNext('collection-overview', {})
-		this._spawnNext('perfectChild', {})
 		//this._spawnNext('collection', { path:'/Users/Julian/Documents/StGB.ivy' })
-		//this._spawnNext('settings')
+		this._spawnNext('settings')
 	},
 	methods: {
 		/**
@@ -90,9 +93,7 @@ export default {
 				popModal: this.popModal,
 			})
 			this.focus = len
-			Vue.nextTick(() => {
-				this._scrollToFocus()
-			})
+			Vue.nextTick(debounce(this._scrollToFocus, 50))
 		},
 		/**
 		 * Calculates offset
@@ -111,10 +112,12 @@ export default {
 		 */
 		spawnChild: function(sheet, comp, data) {
 			let len = this.sheets.length
-			if (len > sheet.nr+1) this.closeChild(sheet)
-			Vue.nextTick(() => {
-				this._spawnNext(comp, data)
-			})
+			let timeout = 0
+			if (len > sheet.nr+1) {
+				this.closeChild(sheet)
+				timeout = 500
+			}
+			setTimeout(()=>{this._spawnNext(comp, data)}, timeout)
 		},
 		/**
 		 * @param {number} sheet-nr
