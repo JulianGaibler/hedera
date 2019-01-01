@@ -1,6 +1,9 @@
 {
 	"action": {
-		"open": "Open",
+		"open": {
+			"_": "Open",
+			"collection": "Open Collection"
+		},
 		"edit": {
 			"_": "Edit",
 			"collection": "Edit Collection"
@@ -19,7 +22,7 @@
 	},
 	"info": {
 		"modules": {
-			"_": "0 modules | 1 module | {count} modules",
+			"_": "0 modules | 1 module | {n} modules",
 			"main": "Main Module",
 			"mains": "Main Modules",
 			"reuseable": "Reuseable Module",
@@ -28,14 +31,14 @@
 			"children": "Child Modules"
 		},
 		"terms": {
-			"_": "0 terms | 1 term | {count} terms",
+			"_": "0 terms | 1 term | {n} terms",
 			"reuseable": "Reuseable Term",
 			"reuseables": "Reuseable Terms"
 		}
 	},
 	"settings": {
 		"title": "Settings",
-		"use_system_default": "Use System Default",
+		"use_system_default": "use System Default",
 		"language": "Language",
 		"language_desc": "This action requires an Application restart.",
 		"defaultdirectory": "Default Directory",

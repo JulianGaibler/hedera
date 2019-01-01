@@ -17,7 +17,7 @@ export default {
 			useDefault: {
 				type: 'checkbox',
 				options: [
-					{value: 'languages', label: 'use System default'},
+					{value: 'languages', label18: 'settings.use_system_default'},
 				]
 			},
 			languages: {

@@ -23,7 +23,7 @@ export default {
 			useDefault: {
 				type: 'checkbox',
 				options: [
-					{value: 'defaultDirectory', label: 'use System default'},
+					{value: 'defaultDirectory', label18: 'settings.use_system_default'},
 				]
 			},
 			defaultDirectory: {

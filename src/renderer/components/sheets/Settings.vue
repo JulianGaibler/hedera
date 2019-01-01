@@ -4,7 +4,7 @@
 			<h2 class="grey">{{ $t('settings.title') }}</h2>
 		</div>
 
-		<buttons :actions="actionButtons" />
+		<buttons class="actionBar" :actions="actionButtons" />
 
 		<language />
 		<defaultDirectory />
