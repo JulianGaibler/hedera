@@ -9,7 +9,7 @@
 					v-model="selectedOptions"
 					@change="onChange"
 				>
-				{{data.label ? data.label : $t(data.label18)}}
+				{{option.label ? option.label : $t(option.label18)}}
 			</label>
 		</div>
 	</div>
@@ -18,7 +18,7 @@
 <script>
 
 export default {
-	name: 'formInput',
+	name: 'formOptions',
 	/**
 	 * Data-Props
 	 * {string} value - this will get propagated back to the parent
